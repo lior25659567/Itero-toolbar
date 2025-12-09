@@ -10,15 +10,16 @@ import imgOcclusionHeatmap from "figma:asset/c17f0d7025aceb7deb5df75b4c464fa4ec7
 import imgOcclusionHeatmapMonochrome from "figma:asset/d411b5f7af6c8dc24f1c68de9edcc7cc38e7016d.png";
 import { imgPath4141, imgGroup2917 } from "../imports/svg-fvlvg";
 import Frame1618872975 from "../imports/Frame1618872975";
-import HorizontalToolbarCollapsed from "../imports/Toolbar-146-1635";
-import HorizontalToolbarExpanded from "../imports/Toolbar-146-2082";
+import { HorizontalBottomToolbarScan } from "./HorizontalBottomToolbarScan";
+import { HorizontalBottomToolbarView } from "./HorizontalBottomToolbarView";
 import Panel from "../imports/Panel";
 import CameraNiri from "../imports/CameraNiri";
 import Scale from "../imports/Scale-161-4737";
 import Panel881668 from "../imports/Panel-88-1668";
 import LayerPanel from "../imports/LayerPanel-97-10893";
-import { HorizontalViewToolbar } from "./HorizontalToolbarView";
 import Scale833974 from "../imports/Scale-161-4811";
+import { HorizontalTopToolbarScan } from "./HorizontalTopToolbarScan";
+import { HorizontalTopToolbarView } from "./HorizontalTopToolbarView";
 
 // Import all the same components from ScreenTemplate
 function Component3DModelMary({ activeButtons }: { activeButtons: Set<number> }) {
@@ -206,6 +207,9 @@ export default function HorizontalScreenTemplate({
   const [currentPage, setCurrentPage] = useState<string>(initialPage);
   const [activeButtons, setActiveButtons] = useState<Set<number>>(new Set());
   const [viewActiveButtons, setViewActiveButtons] = useState<Set<number>>(new Set());
+  // Separate state for top toolbars - completely independent from bottom toolbars
+  const [topActiveButtons, setTopActiveButtons] = useState<Set<number>>(new Set());
+  const [topViewActiveButtons, setTopViewActiveButtons] = useState<Set<number>>(new Set());
 
   const handleButtonClick = (index: number) => {
     setActiveButtons(prev => {
@@ -245,12 +249,53 @@ export default function HorizontalScreenTemplate({
     });
   };
 
+  // Separate handlers for top toolbars - completely independent from bottom toolbars
+  const handleTopButtonClick = (index: number) => {
+    setTopActiveButtons(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
+  const handleTopViewButtonClick = (index: number) => {
+    setTopViewActiveButtons(prev => {
+      const newSet = new Set(prev);
+      
+      // Occlusalgram (index 2) and Prep QC (index 4) are mutually exclusive
+      if (index === 2 || index === 4) {
+        const otherIndex = index === 2 ? 4 : 2;
+        newSet.delete(otherIndex);
+        
+        if (newSet.has(index)) {
+          newSet.delete(index);
+        } else {
+          newSet.add(index);
+        }
+      } else {
+        if (newSet.has(index)) {
+          newSet.delete(index);
+        } else {
+          newSet.add(index);
+        }
+      }
+      
+      return newSet;
+    });
+  };
+
   const handlePageChange = (page: string) => {
     setCurrentPage(page);
     if (page === 'scan') {
       setActiveButtons(new Set());
+      setTopActiveButtons(new Set());
     } else if (page === 'view') {
       setViewActiveButtons(new Set());
+      setTopViewActiveButtons(new Set());
     }
   };
 
@@ -285,37 +330,52 @@ export default function HorizontalScreenTemplate({
         </div>
       </div>
 
-      {/* Horizontal Toolbar at Bottom */}
+      {/* Horizontal Top Toolbar - Independent state from bottom toolbar */}
+      {currentPage === 'scan' && (
+        <div className="absolute right-[17px] top-[93px]">
+          <HorizontalTopToolbarScan 
+            activeButtons={topActiveButtons} 
+            onButtonClick={handleTopButtonClick} 
+            microAnimations={microAnimations} 
+          />
+        </div>
+      )}
+
+      {currentPage === 'view' && (
+        <div className="absolute right-[17px] top-[93px]">
+          <HorizontalTopToolbarView 
+            activeButtons={topViewActiveButtons} 
+            onButtonClick={handleTopViewButtonClick} 
+            microAnimations={microAnimations} 
+          />
+        </div>
+      )}
+
+      {/* Horizontal Bottom Toolbar */}
       {currentPage === 'scan' && (
         <div className="absolute bottom-[14px] left-1/2 translate-x-[-50%]">
-          {activeButtons.has(6) ? (
-            <div className="w-[850px] h-[104px]">
-              <HorizontalToolbarExpanded />
-            </div>
-          ) : (
-            <div className="w-[478px] h-[76px]">
-              <HorizontalToolbarCollapsed />
-            </div>
-          )}
+          <HorizontalBottomToolbarScan 
+            activeButtons={activeButtons} 
+            onButtonClick={handleButtonClick}
+            microAnimations={microAnimations}
+          />
         </div>
       )}
 
-      {/* View page toolbar */}
+      {/* View page bottom toolbar */}
       {currentPage === 'view' && (
         <div className="absolute bottom-[14px] left-1/2 translate-x-[-50%]">
-          <div className={viewActiveButtons.has(6) ? "w-[580px] h-[76px]" : "w-[444px] h-[76px]"}>
-            <HorizontalViewToolbar 
-              activeButtons={viewActiveButtons} 
-              onButtonClick={handleViewButtonClick}
-              microAnimations={microAnimations}
-            />
-          </div>
+          <HorizontalBottomToolbarView 
+            activeButtons={viewActiveButtons} 
+            onButtonClick={handleViewButtonClick}
+            microAnimations={microAnimations}
+          />
         </div>
       )}
 
-      {/* Panels for scan page */}
+      {/* Panels for scan page - Horizontal Top Toolbar Layout */}
       {currentPage === 'scan' && activeButtons.has(2) && (
-        <div className={activeButtons.has(1) ? "absolute bottom-[14px] left-[14px]" : "absolute top-[93px] right-[17px]"}>
+        <div className="absolute top-[185px] right-[17px]">
           <Frame1618872975 />
         </div>
       )}
@@ -330,8 +390,19 @@ export default function HorizontalScreenTemplate({
       {/* Scale components for view page */}
       {currentPage === 'view' && (
         <>
+          {viewActiveButtons.has(1) && (
+            <div className="absolute top-[185px] right-[17px] w-[432px] h-[846px]">
+              <CameraNiri />
+            </div>
+          )}
+          {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+            <div className="absolute bottom-[14px] left-[14px]">
+              {viewActiveButtons.has(3) && <Panel />}
+              {viewActiveButtons.has(5) && <Panel881668 />}
+            </div>
+          )}
           {!viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-            <div className="absolute top-[93px] right-[17px]">
+            <div className="absolute top-[185px] right-[17px]">
               {viewActiveButtons.has(3) && <Panel />}
               {viewActiveButtons.has(5) && <Panel881668 />}
             </div>

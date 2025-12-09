@@ -207,12 +207,12 @@ function Frame5({ activeButtons, onButtonClick, microAnimations }: { activeButto
 
 function Icon() {
   return (
-    <div className="relative shrink-0 size-[20.001px]" data-name="Icon">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
+    <div className="relative shrink-0 size-[32px]" data-name="Icon">
+      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
         <g id="Icon">
-          <path d="M12.4991 10.0002H2.49878" id="Vector" stroke="var(--stroke-0, #717182)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66672" />
-          <path d="M14.1658 15.0002H2.49878" id="Vector_2" stroke="var(--stroke-0, #717182)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66672" />
-          <path d="M17.4992 4.99994H2.49878" id="Vector_3" stroke="var(--stroke-0, #717182)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66672" />
+          <circle cx="12" cy="12" r="10" stroke="#3e3d40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <line x1="12" y1="16" x2="12" y2="12" stroke="#3e3d40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <line x1="12" y1="8" x2="12" y2="8" stroke="#3e3d40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </g>
       </svg>
     </div>

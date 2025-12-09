@@ -1,3 +1,4 @@
+// Scale bar components
 function Frame() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
@@ -325,7 +326,7 @@ function Group() {
 
 function Button() {
   return (
-    <div className="absolute bg-gradient-to-b bottom-[0.65%] content-stretch flex from-[#ffffff] items-center justify-center left-[83.51%] px-[16px] py-[12px] right-0 rounded-[4px] to-[#f3f3f3] top-0" data-name="Button">
+    <div className="absolute bg-gradient-to-b content-stretch flex from-[#ffffff] items-center justify-center px-[16px] py-[12px] rounded-[4px] to-[#f3f3f3] h-[52px] w-[165px] right-0 top-[8px]" data-name="Button">
       <div aria-hidden="true" className="absolute border border-[#939598] border-solid inset-0 pointer-events-none rounded-[4px]" />
       <div className="flex flex-col font-['Avenir:Roman',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#3e3d40] text-[14px] text-center text-nowrap">
         <p className="leading-[18px] whitespace-pre">Change scale</p>
@@ -336,7 +337,7 @@ function Button() {
 
 export default function Scale() {
   return (
-    <div className="relative size-full mt-[0px] mr-[0px] mb-[120px] ml-[80px]" data-name="Scale">
+    <div className="relative size-full" data-name="Scale">
       <Frame24 />
       <Group />
       <Button />

@@ -9,6 +9,7 @@ function Button() {
   );
 }
 
+// Scale bar components
 function Frame() {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full">
@@ -189,7 +190,7 @@ function Frame16() {
 
 function Frame17() {
   return (
-    <div className="basis-0 bg-[#2ce9c6] content-stretch flex flex-col grow items-start min-h-px min-w-px relative shrink-0">
+    <div className="basis-0 content-stretch flex flex-col grow items-start min-h-px min-w-px relative shrink-0">
       <Frame16 />
     </div>
   );

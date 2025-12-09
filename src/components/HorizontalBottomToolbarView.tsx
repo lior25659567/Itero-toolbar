@@ -6,7 +6,7 @@ import MarginLineNew from "../imports/MarginLineNew";
 import PrepQcNew from "../imports/PrepQcNew";
 import TrimNew from "../imports/TrimNew";
 
-// Monochrome icon component (same as scan toolbar)
+// Monochrome icon component
 function TrimArea() {
   return (
     <div className="absolute bottom-0 left-[-14%] right-[-12.5%] top-[8.56%]" data-name="trim area">
@@ -41,18 +41,38 @@ function MonoChomrNew() {
   );
 }
 
-// Expand/Collapse icon
-function ExpandIcon() {
+// InfoIcon component (matching top toolbar)
+function InfoIcon() {
   return (
-    <div className="relative shrink-0 size-[20px]" data-name="Icon">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 20 20">
-        <g id="Icon">
-          <path d="M12.4991 10.0002H2.49878" id="Vector" stroke="var(--stroke-0, #717182)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66672" />
-          <path d="M14.1658 15.0002H2.49878" id="Vector_2" stroke="var(--stroke-0, #717182)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66672" />
-          <path d="M17.4992 4.99994H2.49878" id="Vector_3" stroke="var(--stroke-0, #717182)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.66672" />
-        </g>
-      </svg>
+    <svg className="block size-[32px]" viewBox="0 0 24 24" fill="none" stroke="#3e3d40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="16" x2="12" y2="12" />
+      <line x1="12" y1="8" x2="12" y2="8" />
+    </svg>
+  );
+}
+
+function Button() {
+  return (
+    <div className="content-stretch flex size-[60px] items-center justify-center relative rounded-[8px] shrink-0" data-name="Button">
+      <div className="rotate-[90deg]">
+        <InfoIcon />
+      </div>
     </div>
+  );
+}
+
+function AohsButton6({ onClick }: { onClick: () => void }) {
+  return (
+    <motion.div 
+      className="content-stretch flex flex-col items-center justify-between relative rounded-[4px] size-[60px] cursor-pointer overflow-hidden" 
+      data-name="AOHS button"
+      onClick={onClick}
+      whileTap={{ scale: 0.95 }}
+    >
+      <div aria-hidden="true" className="absolute border-0 border-[#00adef] border-solid inset-0 pointer-events-none rounded-[4px]" />
+      <Button />
+    </motion.div>
   );
 }
 
@@ -68,9 +88,9 @@ function CollapsedToolbar({
 }) {
   const animationProps = microAnimations ? {
     animate: (isActive: boolean) => ({
-      scale: isActive ? 1.05 : 1,
+      scale: isActive ? 1.08 : 1,
     }),
-    whileTap: { scale: 0.95 },
+    whileTap: { scale: 0.92 },
     transition: {
       type: "spring" as const,
       stiffness: 500,
@@ -79,8 +99,8 @@ function CollapsedToolbar({
   } : {};
 
   return (
-    <div className="bg-white rounded-[4px] size-full flex items-center font-['Roboto']">
-      <div className="flex items-center gap-[8px] px-[16px] py-[16px] flex-1">
+    <div className="bg-white rounded-[4px] flex items-center font-['Roboto'] p-[8px] h-[76px]">
+      <div className="flex items-center gap-[16px] px-[8px]">
         {/* Button 0: Monochrome */}
         <motion.div 
           className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
@@ -88,9 +108,7 @@ function CollapsedToolbar({
           onClick={() => onButtonClick(0)}
           {...animationProps}
         >
-          <div className="scale-100">
-            <MonoChomrNew />
-          </div>
+          <MonoChomrNew />
         </motion.div>
 
         {/* Button 1: NIRI+IOC */}
@@ -100,9 +118,7 @@ function CollapsedToolbar({
           onClick={() => onButtonClick(1)}
           {...animationProps}
         >
-          <div className="scale-100">
-            <NiriIonNew />
-          </div>
+          <NiriIonNew />
         </motion.div>
 
         {/* Button 2: Occlusalgram */}
@@ -112,9 +128,7 @@ function CollapsedToolbar({
           onClick={() => onButtonClick(2)}
           {...animationProps}
         >
-          <div className="scale-100">
-            <OcculsgramNew />
-          </div>
+          <OcculsgramNew />
         </motion.div>
 
         {/* Button 3: Margin Line */}
@@ -124,9 +138,7 @@ function CollapsedToolbar({
           onClick={() => onButtonClick(3)}
           {...animationProps}
         >
-          <div className="scale-100">
-            <MarginLineNew />
-          </div>
+          <MarginLineNew />
         </motion.div>
 
         {/* Button 4: Prep QC */}
@@ -136,7 +148,7 @@ function CollapsedToolbar({
           onClick={() => onButtonClick(4)}
           {...animationProps}
         >
-          <div className="scale-100">
+          <div className="size-[60px]">
             <PrepQcNew />
           </div>
         </motion.div>
@@ -148,15 +160,19 @@ function CollapsedToolbar({
           onClick={() => onButtonClick(5)}
           {...animationProps}
         >
-          <div className="scale-100">
+          <div className="size-[60px]">
             <TrimNew />
           </div>
         </motion.div>
       </div>
 
       {/* Expand button */}
-      <div className="bg-white border-l border-[rgba(0,0,0,0.1)] h-full flex items-center justify-center px-[12px] cursor-pointer rounded-r-[4px]" onClick={() => onButtonClick(6)}>
-        <ExpandIcon />
+      <div className="flex h-[76px] items-center justify-center relative shrink-0 w-[76px] bg-white border-l border-[rgba(0,0,0,0.1)] rounded-r-[4px]">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="rotate-[270deg]">
+            <AohsButton6 onClick={() => onButtonClick(6)} />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -185,109 +201,111 @@ function ExpandedToolbar({
   } : {};
 
   return (
-    <div className="bg-white rounded-[4px] size-full flex items-center font-['Roboto'] p-[12px]">
-      <div className="flex items-center gap-[8px] flex-1">
+    <div className="bg-white rounded-[4px] flex items-center font-['Roboto'] py-[12px] px-[12px] min-h-[120px]">
+      <div className="flex items-center gap-[16px] flex-1 px-[8px]">
         {/* Button 0: Monochrome */}
         <motion.div 
-          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px]`}
+          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
           custom={activeButtons.has(0)}
           onClick={() => onButtonClick(0)}
           {...animationProps}
         >
-          <div className="w-[40px] h-[40px] flex items-center justify-center shrink-0">
-            <div className="scale-[0.7]">
+          <div className="flex items-center justify-center w-[32px] h-[32px]">
+            <div className="scale-[0.53]">
               <MonoChomrNew />
             </div>
           </div>
-          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">Monochrome</p>
+          <p className="font-['Roboto'] text-[12px] leading-[14px] text-black whitespace-nowrap">Monochrome</p>
         </motion.div>
 
         {/* Button 1: NIRI+IOC */}
         <motion.div 
-          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px]`}
+          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
           custom={activeButtons.has(1)}
           onClick={() => onButtonClick(1)}
           {...animationProps}
         >
-          <div className="w-[40px] h-[40px] flex items-center justify-center shrink-0">
-            <div className="scale-[0.7]">
+          <div className="flex items-center justify-center w-[32px] h-[32px]">
+            <div className="scale-[0.53]">
               <NiriIonNew />
             </div>
           </div>
-          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">NIRI+IOC</p>
+          <p className="font-['Roboto'] text-[12px] leading-[14px] text-black whitespace-nowrap">NIRI+IOC</p>
         </motion.div>
 
         {/* Button 2: Occlusalgram */}
         <motion.div 
-          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px]`}
+          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
           custom={activeButtons.has(2)}
           onClick={() => onButtonClick(2)}
           {...animationProps}
         >
-          <div className="w-[40px] h-[40px] flex items-center justify-center shrink-0">
-            <div className="scale-[0.7]">
+          <div className="flex items-center justify-center w-[32px] h-[32px]">
+            <div className="scale-[0.53]">
               <OcculsgramNew />
             </div>
           </div>
-          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">Occlusalgram</p>
+          <p className="font-['Roboto'] text-[12px] leading-[14px] text-black whitespace-nowrap">Occlusalgram</p>
         </motion.div>
 
         {/* Button 3: Margin Line */}
         <motion.div 
-          className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px]`}
+          className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
           custom={activeButtons.has(3)}
           onClick={() => onButtonClick(3)}
           {...animationProps}
         >
-          <div className="w-[40px] h-[40px] flex items-center justify-center shrink-0">
-            <div className="scale-[0.7]">
+          <div className="flex items-center justify-center w-[32px] h-[32px]">
+            <div className="scale-[0.53]">
               <MarginLineNew />
             </div>
           </div>
-          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">Margin line</p>
+          <p className="font-['Roboto'] text-[12px] leading-[14px] text-black whitespace-nowrap">Margin line</p>
         </motion.div>
 
         {/* Button 4: Prep QC */}
         <motion.div 
-          className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px]`}
+          className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[12px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-w-[70px]`}
           custom={activeButtons.has(4)}
           onClick={() => onButtonClick(4)}
           {...animationProps}
         >
-          <div className="w-[40px] h-[40px] flex items-center justify-center shrink-0">
-            <div className="scale-[0.7]">
+          <div className="w-[32px] h-[32px] relative shrink-0">
+            <div className="absolute left-1/2 top-1/2 size-[60px] origin-center" style={{ transform: 'translate(-50%, -50%) scale(1.05) translate(-2px, -2px)' }}>
               <PrepQcNew />
             </div>
           </div>
-          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">Prep QC</p>
+          <p className="font-['Roboto'] text-[12px] leading-[14px] text-black whitespace-nowrap">Prep QC</p>
         </motion.div>
 
         {/* Button 5: Trim */}
         <motion.div 
-          className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px]`}
+          className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[12px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-w-[70px]`}
           custom={activeButtons.has(5)}
           onClick={() => onButtonClick(5)}
           {...animationProps}
         >
-          <div className="w-[40px] h-[40px] flex items-center justify-center shrink-0">
-            <div className="scale-[0.7]">
+          <div className="w-[32px] h-[32px] relative shrink-0">
+            <div className="absolute left-1/2 top-1/2 size-[60px] origin-center" style={{ transform: 'translate(-50%, -50%) scale(1.05)' }}>
               <TrimNew />
             </div>
           </div>
-          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">Trim</p>
+          <p className="font-['Roboto'] text-[12px] leading-[14px] text-black whitespace-nowrap">Trim</p>
         </motion.div>
       </div>
 
       {/* Expand button */}
-      <div className="bg-white border-l border-[rgba(0,0,0,0.1)] h-full flex items-center justify-center px-[12px] cursor-pointer rounded-r-[4px]" onClick={() => onButtonClick(6)}>
-        <ExpandIcon />
+      <div className="flex self-stretch items-center justify-center relative shrink-0 bg-white border-l border-[rgba(0,0,0,0.1)] rounded-r-[4px] py-[12px] px-[12px]">
+        <div className="rotate-[270deg]">
+          <AohsButton6 onClick={() => onButtonClick(6)} />
+        </div>
       </div>
     </div>
   );
 }
 
 // Main export that switches between collapsed and expanded
-export function HorizontalViewToolbar({
+export function HorizontalBottomToolbarView({
   activeButtons,
   onButtonClick,
   microAnimations = true
@@ -298,17 +316,9 @@ export function HorizontalViewToolbar({
 }) {
   const isExpanded = activeButtons.has(6);
 
-  return isExpanded ? (
-    <ExpandedToolbar 
-      activeButtons={activeButtons} 
-      onButtonClick={onButtonClick} 
-      microAnimations={microAnimations} 
-    />
-  ) : (
-    <CollapsedToolbar 
-      activeButtons={activeButtons} 
-      onButtonClick={onButtonClick} 
-      microAnimations={microAnimations} 
-    />
-  );
+  if (isExpanded) {
+    return <ExpandedToolbar activeButtons={activeButtons} onButtonClick={onButtonClick} microAnimations={microAnimations} />;
+  }
+
+  return <CollapsedToolbar activeButtons={activeButtons} onButtonClick={onButtonClick} microAnimations={microAnimations} />;
 }

@@ -16,6 +16,8 @@ import { HorizontalScanToolbar } from "../components/HorizontalToolbarScan";
 import { HorizontalViewToolbar } from "../components/HorizontalToolbarView";
 import { HorizontalTopToolbarScan } from "../components/HorizontalTopToolbarScan";
 import { HorizontalTopToolbarView } from "../components/HorizontalTopToolbarView";
+import { HorizontalBottomToolbarScan } from "../components/HorizontalBottomToolbarScan";
+import { HorizontalBottomToolbarView } from "../components/HorizontalBottomToolbarView";
 import ViewToolbar from "./ViewToolbar";
 import Panel from "./Panel";
 import CameraNiri from "./CameraNiri";
@@ -2596,11 +2598,10 @@ export default function ScreenTemplate({
       {currentPage === 'scan' && layout === 'horizontal-bottom' && (
         <>
           <div className="absolute bottom-[14px] left-1/2 translate-x-[-50%] z-50">
-            <HorizontalTopToolbarScan 
+            <HorizontalBottomToolbarScan 
               activeButtons={activeButtons} 
               onButtonClick={handleButtonClick} 
               microAnimations={microAnimations}
-              stackVertical={true}
             />
           </div>
           {activeButtons.has(2) && (
@@ -2630,6 +2631,12 @@ export default function ScreenTemplate({
               {viewActiveButtons.has(1) && (
                 <div className="absolute right-[228px] top-[93px] w-[432px] h-[846px]">
                   <CameraNiri />
+                </div>
+              )}
+              {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+                <div className="absolute bottom-[14px] left-[14px]">
+                  {viewActiveButtons.has(3) && <Panel />}
+                  {viewActiveButtons.has(5) && <Panel881668 />}
                 </div>
               )}
               {!viewActiveButtons.has(1) && viewActiveButtons.has(3) && (
@@ -2663,6 +2670,12 @@ export default function ScreenTemplate({
                   <CameraNiri />
                 </div>
               )}
+              {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+                <div className="absolute bottom-[14px] left-[14px]">
+                  {viewActiveButtons.has(3) && <Panel />}
+                  {viewActiveButtons.has(5) && <Panel881668 />}
+                </div>
+              )}
               {!viewActiveButtons.has(1) && viewActiveButtons.has(3) && (
                 <div className="absolute right-[106px] top-[93px]">
                   <Panel />
@@ -2689,7 +2702,10 @@ export default function ScreenTemplate({
       )}
       {currentPage === 'view' && layout === 'horizontal' && (
         <>
-          <div className={`absolute bottom-[14px] left-1/2 translate-x-[-50%] ${viewActiveButtons.has(6) ? 'w-[790px] h-[104px]' : 'w-[524px] h-[92px]'}`}>
+          <div 
+            className={`absolute left-1/2 translate-x-[-50%] ${viewActiveButtons.has(6) ? 'w-[790px] h-[104px]' : 'w-[524px] h-[92px]'}`}
+            style={{ bottom: viewActiveButtons.has(2) ? 'calc(14px + 148px)' : viewActiveButtons.has(4) ? 'calc(14px + 68px)' : '14px' }}
+          >
             <HorizontalViewToolbar 
               activeButtons={viewActiveButtons} 
               onButtonClick={handleViewButtonClick} 
@@ -2731,13 +2747,7 @@ export default function ScreenTemplate({
             <HorizontalTopToolbarScan activeButtons={activeButtons} onButtonClick={handleButtonClick} microAnimations={microAnimations} />
           </div>
           {activeButtons.has(2) && (
-            <div className={
-              activeButtons.has(3) 
-                ? "absolute top-[185px] right-[17px]"
-                : activeButtons.has(1) 
-                  ? "absolute bottom-[14px] left-[14px]" 
-                  : "absolute top-[169px] right-[17px]"
-            }>
+            <div className="absolute top-[185px] right-[17px]">
               <Frame1618872975 />
             </div>
           )}
@@ -2749,7 +2759,7 @@ export default function ScreenTemplate({
             <HorizontalTopToolbarView activeButtons={viewActiveButtons} onButtonClick={handleViewButtonClick} microAnimations={microAnimations} />
           </div>
           {viewActiveButtons.has(1) && (
-            <div className="absolute top-[169px] right-[17px] w-[432px] h-[846px]">
+            <div className="absolute top-[185px] right-[17px] w-[432px] h-[846px]">
               <CameraNiri />
             </div>
           )}
@@ -2760,7 +2770,7 @@ export default function ScreenTemplate({
             </div>
           )}
           {!viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-            <div className="absolute right-[17px] top-[169px]">
+            <div className="absolute top-[185px] right-[17px]">
               {viewActiveButtons.has(3) && <Panel />}
               {viewActiveButtons.has(5) && <Panel881668 />}
             </div>
@@ -2780,14 +2790,24 @@ export default function ScreenTemplate({
       {currentPage === 'view' && layout === 'horizontal-bottom' && (
         <>
           <div className="absolute bottom-[14px] left-1/2 translate-x-[-50%] z-50">
-            <HorizontalTopToolbarView activeButtons={viewActiveButtons} onButtonClick={handleViewButtonClick} microAnimations={microAnimations} stackVertical={true} />
+            <HorizontalBottomToolbarView 
+              activeButtons={viewActiveButtons} 
+              onButtonClick={handleViewButtonClick} 
+              microAnimations={microAnimations} 
+            />
           </div>
           {viewActiveButtons.has(1) && (
             <div className="absolute top-[93px] right-[17px] w-[432px] h-[846px]">
               <CameraNiri />
             </div>
           )}
-          {(viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+          {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+            <div className="absolute bottom-[14px] left-[14px]">
+              {viewActiveButtons.has(3) && <Panel />}
+              {viewActiveButtons.has(5) && <Panel881668 />}
+            </div>
+          )}
+          {!viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
             <div className="absolute right-[17px] top-[93px]">
               {viewActiveButtons.has(3) && <Panel />}
               {viewActiveButtons.has(5) && <Panel881668 />}

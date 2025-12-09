@@ -4,7 +4,7 @@ import svgPaths from "../imports/svg-76kjqgrbiw";
 
 function InfoIcon() {
   return (
-    <svg className="block size-[20px]" viewBox="0 0 24 24" fill="none" stroke="#3e3d40" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="block size-[32px]" viewBox="0 0 24 24" fill="none" stroke="#3e3d40" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
       <line x1="12" y1="16" x2="12" y2="12" />
       <line x1="12" y1="8" x2="12" y2="8" />
@@ -241,32 +241,50 @@ function ExpandedToolbar({
       
       {/* Monochrome */}
       <motion.div 
-        className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[4px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
+        className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
         onClick={() => onButtonClick(0)}
         whileTap={{ scale: 0.95 }}
       >
-        <AohsButton isActive={activeButtons.has(0)} onClick={() => {}} />
-        <p className="font-['Roboto'] text-[14px] leading-[16px] text-black whitespace-nowrap text-center">Monochrome</p>
+        {stackVertical ? (
+          <div className="scale-[0.5] origin-center">
+            <AohsButton isActive={activeButtons.has(0)} onClick={() => {}} />
+          </div>
+        ) : (
+          <AohsButton isActive={activeButtons.has(0)} onClick={() => {}} />
+        )}
+        <p className={`font-['Roboto'] text-black whitespace-nowrap text-center ${stackVertical ? 'text-[12px] leading-[14px]' : 'text-[14px] leading-[16px]'}`}>Monochrome</p>
       </motion.div>
 
       {/* Feedback */}
       <motion.div 
-        className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[4px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
+        className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
         onClick={() => onButtonClick(1)}
         whileTap={{ scale: 0.95 }}
       >
-        <AohsButton1 isActive={activeButtons.has(1)} onClick={() => {}} />
-        <p className="font-['Roboto'] text-[14px] leading-[16px] text-black whitespace-nowrap text-center">Scan assist</p>
+        {stackVertical ? (
+          <div className="scale-[0.5] origin-center">
+            <AohsButton1 isActive={activeButtons.has(1)} onClick={() => {}} />
+          </div>
+        ) : (
+          <AohsButton1 isActive={activeButtons.has(1)} onClick={() => {}} />
+        )}
+        <p className={`font-['Roboto'] text-black whitespace-nowrap text-center ${stackVertical ? 'text-[12px] leading-[14px]' : 'text-[14px] leading-[16px]'}`}>Scan assist</p>
       </motion.div>
 
       {/* Prep Edit */}
       <motion.div 
-        className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[4px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
+        className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
         onClick={() => onButtonClick(2)}
         whileTap={{ scale: 0.95 }}
       >
-        <AohsButton2 isActive={activeButtons.has(2)} onClick={() => {}} />
-        <p className="font-['Roboto'] text-[14px] leading-[16px] text-black whitespace-nowrap text-center">Prep edit</p>
+        {stackVertical ? (
+          <div className="scale-[0.5] origin-center">
+            <AohsButton2 isActive={activeButtons.has(2)} onClick={() => {}} />
+          </div>
+        ) : (
+          <AohsButton2 isActive={activeButtons.has(2)} onClick={() => {}} />
+        )}
+        <p className={`font-['Roboto'] text-black whitespace-nowrap text-center ${stackVertical ? 'text-[12px] leading-[14px]' : 'text-[14px] leading-[16px]'}`}>Prep edit</p>
       </motion.div>
     </div>
   );
@@ -325,7 +343,6 @@ function AohsButton3({ onClick }: { onClick: () => void }) {
 function Frame3({ onButtonClick }: { onButtonClick: (index: number) => void }) {
   return (
     <div className="bg-white content-stretch flex flex-col h-[76px] items-center justify-center relative rounded-bl-[4px] rounded-br-[4px] w-[76px]">
-      <div aria-hidden="true" className="absolute border-l border-[rgba(0,0,0,0.1)] inset-0 pointer-events-none" />
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="rotate-[270deg]">
           <AohsButton3 onClick={() => onButtonClick(3)} />
@@ -367,10 +384,8 @@ export function HorizontalTopToolbarScan({
   return (
     <div className="content-stretch flex items-start relative rounded-bl-[4px] rounded-tl-[4px] h-[76px] font-['Roboto']">
       <Frame4 activeButtons={activeButtons} onButtonClick={onButtonClick} />
-      <div className="flex h-[76px] items-center justify-center relative shrink-0 w-[76px]" style={{ "--transform-inner-width": "60", "--transform-inner-height": "60" } as React.CSSProperties}>
-        <div className="flex-none rotate-[270deg]">
-          <Frame3 onButtonClick={onButtonClick} />
-        </div>
+      <div className="flex h-[76px] items-center justify-center relative shrink-0 w-[76px] bg-white border-l border-[rgba(0,0,0,0.1)]" style={{ "--transform-inner-width": "60", "--transform-inner-height": "60" } as React.CSSProperties}>
+        <Frame3 onButtonClick={onButtonClick} />
       </div>
     </div>
   );
