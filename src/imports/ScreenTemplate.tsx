@@ -25,6 +25,9 @@ import Scale from "./Scale";
 import Scale833974 from "./Scale-83-3974";
 import Panel881668 from "./Panel-88-1668";
 import LayerPanel from "./LayerPanel-97-10893";
+import OcclusalgramScaleImage from "../components/OcclusalgramScaleImage";
+import PrepQcScaleImage from "../components/PrepQcScaleImage";
+import PrepQcScaleImage from "../components/PrepQcScaleImage";
 
 function Component3DModelMary({ activeButtons }: { activeButtons: Set<number> }) {
   // When both monochrome (0) and feedback (1) buttons are active, show grayscale with blue markers
@@ -2827,13 +2830,23 @@ export default function ScreenTemplate({
             </div>
           )}
           {viewActiveButtons.has(2) && (
-            <div className="absolute bottom-[90px] left-1/2 translate-x-[-50%] w-[1014px] h-[148px] z-40">
-              <Scale />
+            <div 
+              className="absolute left-1/2 translate-x-[-50%] w-[1014px] z-40"
+              style={{
+                bottom: viewActiveButtons.has(6) ? '138px' : '94px'
+              }}
+            >
+              <OcclusalgramScaleImage />
             </div>
           )}
           {viewActiveButtons.has(4) && (
-            <div className="absolute bottom-[90px] left-1/2 translate-x-[-50%] w-[1014px] h-[148px] z-40">
-              <Scale833974 />
+            <div 
+              className="absolute left-1/2 translate-x-[-50%] w-[1014px] z-40"
+              style={{
+                bottom: viewActiveButtons.has(6) ? '138px' : '94px'
+              }}
+            >
+              <PrepQcScaleImage />
             </div>
           )}
         </>
