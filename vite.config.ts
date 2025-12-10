@@ -67,6 +67,7 @@
     },
     server: {
       port: 3000,
+      host: true, // Allow access from network IP addresses (0.0.0.0)
       open: true,
     },
   });

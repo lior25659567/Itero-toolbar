@@ -95,18 +95,20 @@ function CollapsedToolbar({
           className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(0)}
           onClick={() => handleButtonClick(0)}
+          onTapStart={() => handleTapStart(0)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 0 && (
+          {pressedButton === 0 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -120,18 +122,20 @@ function CollapsedToolbar({
           className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(1)}
           onClick={() => handleButtonClick(1)}
+          onTapStart={() => handleTapStart(1)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 1 && (
+          {pressedButton === 1 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -145,18 +149,20 @@ function CollapsedToolbar({
           className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(2)}
           onClick={() => handleButtonClick(2)}
+          onTapStart={() => handleTapStart(2)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 2 && (
+          {pressedButton === 2 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -170,18 +176,20 @@ function CollapsedToolbar({
           className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(3)}
           onClick={() => handleButtonClick(3)}
+          onTapStart={() => handleTapStart(3)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 3 && (
+          {pressedButton === 3 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -195,18 +203,20 @@ function CollapsedToolbar({
           className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(4)}
           onClick={() => handleButtonClick(4)}
+          onTapStart={() => handleTapStart(4)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 4 && (
+          {pressedButton === 4 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -220,18 +230,20 @@ function CollapsedToolbar({
           className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(5)}
           onClick={() => handleButtonClick(5)}
+          onTapStart={() => handleTapStart(5)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 5 && (
+          {pressedButton === 5 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -259,13 +271,20 @@ function ExpandedToolbar({
   onButtonClick: (index: number) => void;
   microAnimations?: boolean;
 }) {
-  const [tappedButton, setTappedButton] = useState<number | null>(null);
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
   
   const animationProps = microAnimations ? {
     animate: (isActive: boolean) => ({
       scale: isActive ? 1.05 : 1,
     }),
-    whileTap: { scale: 0.95 },
+    whileTap: { 
+      scale: 0.88,
+      transition: {
+        type: "spring" as const,
+        stiffness: 600,
+        damping: 15
+      }
+    },
     transition: {
       type: "spring" as const,
       stiffness: 500,
@@ -274,9 +293,15 @@ function ExpandedToolbar({
   } : {};
   
   const handleButtonClick = (index: number) => {
-    setTappedButton(index);
-    setTimeout(() => setTappedButton(null), 400);
     onButtonClick(index);
+  };
+  
+  const handleTapStart = (index: number) => {
+    setPressedButton(index);
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
   };
 
   return (
@@ -287,18 +312,20 @@ function ExpandedToolbar({
           className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(0)}
           onClick={() => handleButtonClick(0)}
+          onTapStart={() => handleTapStart(0)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 0 && (
+          {pressedButton === 0 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -315,18 +342,20 @@ function ExpandedToolbar({
           className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(1)}
           onClick={() => handleButtonClick(1)}
+          onTapStart={() => handleTapStart(1)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 1 && (
+          {pressedButton === 1 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -343,18 +372,20 @@ function ExpandedToolbar({
           className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(2)}
           onClick={() => handleButtonClick(2)}
+          onTapStart={() => handleTapStart(2)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 2 && (
+          {pressedButton === 2 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -371,18 +402,20 @@ function ExpandedToolbar({
           className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(3)}
           onClick={() => handleButtonClick(3)}
+          onTapStart={() => handleTapStart(3)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 3 && (
+          {pressedButton === 3 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -399,18 +432,20 @@ function ExpandedToolbar({
           className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(4)}
           onClick={() => handleButtonClick(4)}
+          onTapStart={() => handleTapStart(4)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 4 && (
+          {pressedButton === 4 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}
@@ -427,18 +462,20 @@ function ExpandedToolbar({
           className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(5)}
           onClick={() => handleButtonClick(5)}
+          onTapStart={() => handleTapStart(5)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
-          {tappedButton === 5 && (
+          {pressedButton === 5 && (
             <motion.div
               className="absolute inset-0 rounded-full pointer-events-none"
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
-                filter: 'blur(10px)',
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
               }}
             />
           )}

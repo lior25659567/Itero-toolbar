@@ -27,7 +27,6 @@ import Panel881668 from "./Panel-88-1668";
 import LayerPanel from "./LayerPanel-97-10893";
 import OcclusalgramScaleImage from "../components/OcclusalgramScaleImage";
 import PrepQcScaleImage from "../components/PrepQcScaleImage";
-import PrepQcScaleImage from "../components/PrepQcScaleImage";
 
 function Component3DModelMary({ activeButtons }: { activeButtons: Set<number> }) {
   // When both monochrome (0) and feedback (1) buttons are active, show grayscale with blue markers
@@ -2477,20 +2476,39 @@ export default function ScreenTemplate({
   microAnimations = true,
   onBackToHome,
   onNavigateToLayout,
-  layout = 'vertical'
+  layout = 'vertical',
+  activeButtons: externalActiveButtons,
+  viewActiveButtons: externalViewActiveButtons,
+  onPageChange: externalOnPageChange,
+  onButtonClick: externalOnButtonClick,
+  onViewButtonClick: externalOnViewButtonClick
 }: {
   initialPage?: string;
   microAnimations?: boolean;
   onBackToHome?: () => void;
   onNavigateToLayout?: (layout: 'home' | 'vertical' | 'horizontal' | 'horizontal-top' | 'horizontal-bottom') => void;
   layout?: 'vertical' | 'horizontal' | 'horizontal-top' | 'horizontal-bottom';
+  activeButtons?: Set<number>;
+  viewActiveButtons?: Set<number>;
+  onPageChange?: (page: string) => void;
+  onButtonClick?: (index: number) => void;
+  onViewButtonClick?: (index: number) => void;
 } = {}) {
-  const [currentPage, setCurrentPage] = useState<string>(initialPage);
-  const [activeButtons, setActiveButtons] = useState<Set<number>>(new Set());
-  const [viewActiveButtons, setViewActiveButtons] = useState<Set<number>>(new Set());
+  // Use external state if provided, otherwise use local state (for backward compatibility)
+  const [localCurrentPage, setLocalCurrentPage] = useState<string>(initialPage);
+  const [localActiveButtons, setLocalActiveButtons] = useState<Set<number>>(new Set());
+  const [localViewActiveButtons, setLocalViewActiveButtons] = useState<Set<number>>(new Set());
+  
+  // Use external state if provided, otherwise fall back to local state
+  // When using external state, use initialPage prop (which contains currentPage from App.tsx)
+  // When using local state, use localCurrentPage
+  const isUsingExternalState = externalOnPageChange !== undefined;
+  const currentPage = isUsingExternalState ? initialPage : localCurrentPage;
+  const activeButtons = externalActiveButtons !== undefined ? externalActiveButtons : localActiveButtons;
+  const viewActiveButtons = externalViewActiveButtons !== undefined ? externalViewActiveButtons : localViewActiveButtons;
 
-  const handleButtonClick = (index: number) => {
-    setActiveButtons(prev => {
+  const handleButtonClick = externalOnButtonClick || ((index: number) => {
+    setLocalActiveButtons(prev => {
       const newSet = new Set(prev);
       if (newSet.has(index)) {
         newSet.delete(index);
@@ -2499,10 +2517,10 @@ export default function ScreenTemplate({
       }
       return newSet;
     });
-  };
+  });
 
-  const handleViewButtonClick = (index: number) => {
-    setViewActiveButtons(prev => {
+  const handleViewButtonClick = externalOnViewButtonClick || ((index: number) => {
+    setLocalViewActiveButtons(prev => {
       const newSet = new Set(prev);
       
       // Occlusalgram (index 2) and Prep QC (index 4) are mutually exclusive
@@ -2537,17 +2555,17 @@ export default function ScreenTemplate({
       
       return newSet;
     });
-  };
+  });
 
-  const handlePageChange = (page: string) => {
-    setCurrentPage(page);
+  const handlePageChange = externalOnPageChange || ((page: string) => {
+    setLocalCurrentPage(page);
     // Reset button states when switching pages
     if (page === 'scan') {
-      setActiveButtons(new Set());
+      setLocalActiveButtons(new Set());
     } else if (page === 'view') {
-      setViewActiveButtons(new Set());
+      setLocalViewActiveButtons(new Set());
     }
-  };
+  });
 
   return (
     <div className="relative size-full" data-name="Screen template" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\\'0 0 1920 1080\\\' xmlns=\\\'http://www.w3.org/2000/svg\\\' preserveAspectRatio=\\\'none\\\'><rect x=\\\'0\\\' y=\\\'0\\\' height=\\\'100%\\\' width=\\\'100%\\\' fill=\\\'url(%23grad)\\\' opacity=\\\'1\\\'/><defs><radialGradient id=\\\'grad\\\' gradientUnits=\\\'userSpaceOnUse\\\' cx=\\\'0\\\' cy=\\\'0\\\' r=\\\'10\\\' gradientTransform=\\\'matrix(69.6 39.825 -70.448 38.956 960 573.75)\\\'><stop stop-color=\\\'rgba(178,205,227,1)\\\' offset=\\\'0\\\'/><stop stop-color=\\\'rgba(221,235,242,1)\\\' offset=\\\'0.94792\\\'/></radialGradient></defs></svg>')" }}>
@@ -2560,6 +2578,7 @@ export default function ScreenTemplate({
           </div>
         </div>
       )}
+      {/* Original separate panels - Review Tool on right, Margin Line on bottom-left */}
       {currentPage === 'view' && viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
         <div className="absolute left-[14px] bottom-[14px]">
           {viewActiveButtons.has(3) && <Panel />}
@@ -2824,7 +2843,7 @@ export default function ScreenTemplate({
             </div>
           )}
           {!viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-            <div className="absolute right-[17px] top-[93px]">
+            <div className="absolute top-[93px] right-[17px]">
               {viewActiveButtons.has(3) && <Panel />}
               {viewActiveButtons.has(5) && <Panel881668 />}
             </div>

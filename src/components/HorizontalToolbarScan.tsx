@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import svgPaths from "../imports/svg-34vouhfnvt";
+import feedbackSvgPaths from "../imports/svg-4m16l2fjs5";
 
 // Monochrome icon component
 function TrimArea() {
@@ -37,19 +38,16 @@ function MonoChomrNew({ isActive }: { isActive?: boolean }) {
   );
 }
 
-// Feedback icon component
+// Feedback icon component - using exact same icon from vertical toolbar (Toolbar.tsx)
 function TrimArea1() {
   return (
-    <div className="absolute h-[35.218px] left-1/2 top-[calc(50%+1.39px)] translate-x-[-50%] translate-y-[-50%] w-[50px]" data-name="trim area">
-      <div className="absolute bottom-0 left-0 right-0 top-[-2.75%]">
-        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 50 37">
+    <div className="absolute inset-[18.33%_8.33%_16.67%_8.33%]" data-name="trim area">
+      <div className="absolute bottom-0 left-0 right-0 top-[-2.65%]">
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 50 41">
           <g id="trim area">
-            <path d={svgPaths.p25b3e280} fill="var(--fill-0, #9FE1FA)" id="Vector" />
-            <g id="Vector_2">
-              <path d={svgPaths.p3df04000} fill="var(--fill-0, white)" />
-              <path d={svgPaths.p3df04000} fill="var(--fill-1, white)" />
-              <path d={svgPaths.p3df04000} stroke="var(--stroke-0, #3D3935)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.93536" />
-            </g>
+            <path d={feedbackSvgPaths.p1f4faa00} fill="var(--fill-0, #FFD6D6)" id="Vector" />
+            <path d={feedbackSvgPaths.p161588f0} fill="var(--fill-0, white)" id="Vector_2" stroke="var(--stroke-0, #3D3935)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.06414" />
+            <path d={feedbackSvgPaths.p1031d180} fill="var(--fill-0, #008EC2)" id="Vector_3" stroke="var(--stroke-0, white)" strokeMiterlimit="10" strokeWidth="2.06414" />
           </g>
         </svg>
       </div>
@@ -57,40 +55,15 @@ function TrimArea1() {
   );
 }
 
-function Group() {
-  return (
-    <div className="relative size-full" data-name="Group">
-      <div className="absolute inset-[-3.73%_-4.43%]">
-        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 25 29">
-          <g id="Group">
-            <path d={svgPaths.p2d44feb0} id="Vector" stroke="var(--stroke-0, #009ACE)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-            <path d={svgPaths.p3ada57a0} id="Vector_2" stroke="var(--stroke-0, #009ACE)" strokeLinecap="round" strokeLinejoin="bevel" strokeWidth="2" />
-          </g>
-        </svg>
-      </div>
-    </div>
-  );
-}
-
-function Group1() {
-  return (
-    <div className="absolute bottom-[41.09%] contents left-[42.47%] right-0 top-[-16.67%]" data-name="Group">
-      <div className="absolute bottom-[41.09%] flex items-center justify-center left-[42.47%] right-0 top-[-16.67%]">
-        <div className="flex-none h-[26.809px] rotate-[345deg] w-[22.595px]">
-          <Group />
-        </div>
-      </div>
-    </div>
-  );
+function Frame3() {
+  return <div className="absolute left-1/2 size-[50px] top-1/2 translate-x-[-50%] translate-y-[-50%]" />;
 }
 
 function FeedbackNew({ isActive }: { isActive?: boolean }) {
   return (
     <div className="relative shrink-0 size-[60px]" data-name="Feedback new">
-      <div className="absolute h-[42px] left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] w-[50px]">
-        <TrimArea1 />
-        <Group1 />
-      </div>
+      <TrimArea1 />
+      <Frame3 />
     </div>
   );
 }
@@ -154,17 +127,38 @@ function CollapsedToolbar({
   onButtonClick: (index: number) => void;
   microAnimations?: boolean;
 }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
   const animationProps = microAnimations ? {
     animate: (isActive: boolean) => ({
       scale: isActive ? 1.08 : 1,
     }),
-    whileTap: { scale: 0.92 },
+    whileTap: { 
+      scale: 0.85,
+      transition: {
+        type: "spring" as const,
+        stiffness: 600,
+        damping: 15
+      }
+    },
     transition: {
       type: "spring" as const,
       stiffness: 500,
       damping: 10
     }
   } : {};
+  
+  const handleButtonClick = (index: number) => {
+    onButtonClick(index);
+  };
+  
+  const handleTapStart = (index: number) => {
+    setPressedButton(index);
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
 
   return (
     <div className="bg-white rounded-[4px] size-full flex items-center font-['Roboto']">
@@ -173,9 +167,24 @@ function CollapsedToolbar({
         <motion.div 
           className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} content-stretch flex items-center justify-center relative rounded-[10px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`}
           custom={activeButtons.has(0)}
-          onClick={() => onButtonClick(0)}
+          onClick={() => handleButtonClick(0)}
+          onTapStart={() => handleTapStart(0)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
+          {pressedButton === 0 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
+              }}
+            />
+          )}
           <div className="relative flex items-center justify-center size-full overflow-hidden">
             <MonoChomrNew isActive={activeButtons.has(0)} />
           </div>
@@ -185,9 +194,24 @@ function CollapsedToolbar({
         <motion.div 
           className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} content-stretch flex items-center justify-center relative rounded-[10px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`}
           custom={activeButtons.has(1)}
-          onClick={() => onButtonClick(1)}
+          onClick={() => handleButtonClick(1)}
+          onTapStart={() => handleTapStart(1)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
+          {pressedButton === 1 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
+              }}
+            />
+          )}
           <div className="relative flex items-center justify-center size-full overflow-hidden">
             <FeedbackNew isActive={activeButtons.has(1)} />
           </div>
@@ -197,9 +221,24 @@ function CollapsedToolbar({
         <motion.div 
           className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} content-stretch flex items-center justify-center relative rounded-[10px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`}
           custom={activeButtons.has(2)}
-          onClick={() => onButtonClick(2)}
+          onClick={() => handleButtonClick(2)}
+          onTapStart={() => handleTapStart(2)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
+          {pressedButton === 2 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
+              }}
+            />
+          )}
           <div className="relative flex items-center justify-center size-full overflow-hidden">
             <PrepEditNew isActive={activeButtons.has(2)} />
           </div>
@@ -224,28 +263,64 @@ function ExpandedToolbar({
   onButtonClick: (index: number) => void;
   microAnimations?: boolean;
 }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
   const animationProps = microAnimations ? {
     animate: (isActive: boolean) => ({
       scale: isActive ? 1.08 : 1,
     }),
-    whileTap: { scale: 0.92 },
+    whileTap: { 
+      scale: 0.88,
+      transition: {
+        type: "spring" as const,
+        stiffness: 600,
+        damping: 15
+      }
+    },
     transition: {
       type: "spring" as const,
       stiffness: 500,
       damping: 10
     }
   } : {};
+  
+  const handleButtonClick = (index: number) => {
+    onButtonClick(index);
+  };
+  
+  const handleTapStart = (index: number) => {
+    setPressedButton(index);
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
 
   return (
     <div className="bg-white rounded-[4px] flex items-center font-['Roboto'] p-[12px]">
       <div className="flex items-center gap-[8px]">
         {/* Button 0: Monochrome */}
         <motion.div 
-          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[4px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-h-[60px]`}
+          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[4px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(0)}
-          onClick={() => onButtonClick(0)}
+          onClick={() => handleButtonClick(0)}
+          onTapStart={() => handleTapStart(0)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
+          {pressedButton === 0 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
+              }}
+            />
+          )}
           <div className="flex items-center justify-center w-[32px] h-[32px]">
             <div className="scale-[0.53]">
               <MonoChomrNew isActive={false} />
@@ -256,11 +331,26 @@ function ExpandedToolbar({
 
         {/* Button 1: Feedback */}
         <motion.div 
-          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[4px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-h-[60px]`}
+          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[4px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(1)}
-          onClick={() => onButtonClick(1)}
+          onClick={() => handleButtonClick(1)}
+          onTapStart={() => handleTapStart(1)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
+          {pressedButton === 1 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
+              }}
+            />
+          )}
           <div className="flex items-center justify-center w-[32px] h-[32px]">
             <div className="scale-[0.53]">
               <FeedbackNew isActive={false} />
@@ -271,11 +361,26 @@ function ExpandedToolbar({
 
         {/* Button 2: Prep Edit */}
         <motion.div 
-          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[4px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-h-[60px]`}
+          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[4px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-h-[60px] relative overflow-hidden`}
           custom={activeButtons.has(2)}
-          onClick={() => onButtonClick(2)}
+          onClick={() => handleButtonClick(2)}
+          onTapStart={() => handleTapStart(2)}
+          onTapEnd={handleTapEnd}
           {...animationProps}
         >
+          {pressedButton === 2 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(12px)',
+              }}
+            />
+          )}
           <div className="flex items-center justify-center w-[32px] h-[32px]">
             <div className="scale-[0.53]">
               <PrepEditNew isActive={false} />

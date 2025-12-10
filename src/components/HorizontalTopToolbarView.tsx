@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import svgPaths from "../imports/svg-34vouhfnvt";
 
@@ -70,22 +70,60 @@ function IconButton({
   isActive,
   onClick,
   Icon,
-  microAnimations = true
+  microAnimations = true,
+  buttonIndex
 }: {
   isActive: boolean;
   onClick?: () => void;
   Icon: React.ComponentType;
   microAnimations?: boolean;
+  buttonIndex?: number;
 }) {
-  const animationProps = microAnimations ? { whileTap: { scale: 0.95 } } : {};
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const animationProps = microAnimations ? { 
+    whileTap: { 
+      scale: 0.85,
+      transition: {
+        type: "spring" as const,
+        stiffness: 600,
+        damping: 15
+      }
+    } 
+  } : {};
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
 
   return (
     <motion.div 
       className={`${isActive ? 'bg-[#DFF5FC]' : 'bg-white'} content-stretch flex items-center justify-center relative rounded-[4px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`} 
       data-name="AOHS button"
       onClick={onClick}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
       {...animationProps}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <div aria-hidden="true" className="absolute border-0 border-[#00adef] border-solid inset-0 pointer-events-none rounded-[4px]" />
       <Icon />
     </motion.div>
@@ -98,7 +136,8 @@ function ExpandedButton({
   isActive,
   onClick,
   microAnimations = true,
-  stackVertical = false
+  stackVertical = false,
+  buttonIndex
 }: {
   label: string;
   Icon: React.ComponentType;
@@ -106,21 +145,58 @@ function ExpandedButton({
   onClick: () => void;
   microAnimations?: boolean;
   stackVertical?: boolean;
+  buttonIndex?: number;
 }) {
-  const animationProps = microAnimations ? { whileTap: { scale: 0.95 } } : {};
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const animationProps = microAnimations ? { 
+    whileTap: { 
+      scale: 0.88,
+      transition: {
+        type: "spring" as const,
+        stiffness: 600,
+        damping: 15
+      }
+    } 
+  } : {};
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
 
   return (
     <motion.div
-      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
+      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer relative overflow-hidden`}
       onClick={onClick}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
       {...animationProps}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       {stackVertical ? (
         <div className="scale-[0.5] origin-center">
-          <IconButton isActive={isActive} Icon={Icon} microAnimations={microAnimations} />
+          <IconButton isActive={isActive} Icon={Icon} microAnimations={microAnimations} buttonIndex={buttonIndex} />
         </div>
       ) : (
-        <IconButton isActive={isActive} Icon={Icon} microAnimations={microAnimations} />
+        <IconButton isActive={isActive} Icon={Icon} microAnimations={microAnimations} buttonIndex={buttonIndex} />
       )}
       <p className={`font-['Roboto'] text-black whitespace-nowrap text-center ${stackVertical ? 'text-[12px] leading-[14px]' : 'text-[14px] leading-[16px]'}`}>{label}</p>
     </motion.div>
@@ -164,6 +240,7 @@ function ExpandedToolbar({
             onClick={() => onButtonClick(index)}
             microAnimations={microAnimations}
             stackVertical={stackVertical}
+            buttonIndex={index}
           />
         </React.Fragment>
       ))}
@@ -189,6 +266,7 @@ function Frame4({
             onClick={() => onButtonClick(index)}
             Icon={btn.Icon}
             microAnimations={microAnimations}
+            buttonIndex={index}
           />
         </React.Fragment>
       ))}

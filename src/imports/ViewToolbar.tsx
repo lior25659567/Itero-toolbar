@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import svgPaths from "./svg-4m16l2fjs5";
 import NiriIonNew from "./NiriIonNew";
 import OcculsgramNew from "./OcculsgramNew";
@@ -55,26 +56,60 @@ function AohsButton({ isActive }: { isActive?: boolean }) {
   );
 }
 
-function ToolbarTextLabel({ isActive, onClick, isExpanded, microAnimations = true }: { isActive: boolean; onClick: () => void; isExpanded?: boolean; microAnimations?: boolean }) {
+function ToolbarTextLabel({ isActive, onClick, isExpanded, microAnimations = true, buttonIndex }: { isActive: boolean; onClick: () => void; isExpanded?: boolean; microAnimations?: boolean; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
   const animationProps = microAnimations ? {
     animate: {
       scale: isActive ? 1.08 : 1,
     },
-    whileTap: { scale: 0.92 },
+    whileTap: { 
+      scale: 0.88,
+      transition: {
+        type: "spring" as const,
+        stiffness: 600,
+        damping: 15
+      }
+    },
     transition: {
       type: "spring" as const,
       stiffness: 500,
       damping: 10
     }
   } : {};
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
 
   return (
     <motion.div 
-      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch`} 
+      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch overflow-hidden`} 
       data-name="Toolbar Text label"
       onClick={onClick}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
       {...animationProps}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <AohsButton isActive={isActive} />
       {isExpanded && <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Monochrome</p>}
     </motion.div>
@@ -90,22 +125,56 @@ function AohsButton1({ isActive }: { isActive?: boolean }) {
   );
 }
 
-function ToolbarTextLabel1({ isActive, onClick, isExpanded }: { isActive: boolean; onClick: () => void; isExpanded?: boolean }) {
+function ToolbarTextLabel1({ isActive, onClick, isExpanded, buttonIndex }: { isActive: boolean; onClick: () => void; isExpanded?: boolean; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
     <motion.div 
-      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch`} 
+      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch overflow-hidden`} 
       data-name="Toolbar Text label"
       onClick={onClick}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
       animate={{
         scale: isActive ? 1.08 : 1,
       }}
-      whileTap={{ scale: 0.92 }}
+      whileTap={{ 
+        scale: 0.88,
+        transition: {
+          type: "spring" as const,
+          stiffness: 600,
+          damping: 15
+        }
+      }}
       transition={{
         type: "spring",
         stiffness: 500,
         damping: 10
       }}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <AohsButton1 isActive={isActive} />
       {isExpanded && <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Review Tool</p>}
     </motion.div>
@@ -121,22 +190,56 @@ function AohsButton2({ isActive }: { isActive?: boolean }) {
   );
 }
 
-function ToolbarTextLabel2({ isActive, onClick, isExpanded }: { isActive: boolean; onClick: () => void; isExpanded?: boolean }) {
+function ToolbarTextLabel2({ isActive, onClick, isExpanded, buttonIndex }: { isActive: boolean; onClick: () => void; isExpanded?: boolean; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
     <motion.div 
-      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch`} 
+      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch overflow-hidden`} 
       data-name="Toolbar Text label"
       onClick={onClick}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
       animate={{
         scale: isActive ? 1.08 : 1,
       }}
-      whileTap={{ scale: 0.92 }}
+      whileTap={{ 
+        scale: 0.88,
+        transition: {
+          type: "spring" as const,
+          stiffness: 600,
+          damping: 15
+        }
+      }}
       transition={{
         type: "spring",
         stiffness: 500,
         damping: 10
       }}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <AohsButton2 isActive={isActive} />
       {isExpanded && <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Occulsgram</p>}
     </motion.div>
@@ -183,22 +286,56 @@ function AohsButton4PrepQc({ isActive }: { isActive?: boolean }) {
   );
 }
 
-function ToolbarTextLabel4({ isActive, onClick, isExpanded }: { isActive: boolean; onClick: () => void; isExpanded?: boolean }) {
+function ToolbarTextLabel4({ isActive, onClick, isExpanded, buttonIndex }: { isActive: boolean; onClick: () => void; isExpanded?: boolean; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
     <motion.div 
-      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch`} 
+      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch overflow-hidden`} 
       data-name="Toolbar Text label"
       onClick={onClick}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
       animate={{
         scale: isActive ? 1.08 : 1,
       }}
-      whileTap={{ scale: 0.92 }}
+      whileTap={{ 
+        scale: 0.88,
+        transition: {
+          type: "spring" as const,
+          stiffness: 600,
+          damping: 15
+        }
+      }}
       transition={{
         type: "spring",
         stiffness: 500,
         damping: 10
       }}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <AohsButton4PrepQc isActive={isActive} />
       {isExpanded && <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Prep QC</p>}
     </motion.div>
@@ -214,22 +351,56 @@ function AohsButton5Trim({ isActive }: { isActive?: boolean }) {
   );
 }
 
-function ToolbarTextLabel5({ isActive, onClick, isExpanded }: { isActive: boolean; onClick: () => void; isExpanded?: boolean }) {
+function ToolbarTextLabel5({ isActive, onClick, isExpanded, buttonIndex }: { isActive: boolean; onClick: () => void; isExpanded?: boolean; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
     <motion.div 
-      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch`} 
+      className={`${isActive ? 'bg-[#DFF5FC]' : ''} flex flex-row items-center ${isExpanded ? 'px-[8px]' : ''} py-0 gap-[4px] h-[60px] relative rounded-[4px] shrink-0 cursor-pointer self-stretch overflow-hidden`} 
       data-name="Toolbar Text label"
       onClick={onClick}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
       animate={{
         scale: isActive ? 1.08 : 1,
       }}
-      whileTap={{ scale: 0.92 }}
+      whileTap={{ 
+        scale: 0.88,
+        transition: {
+          type: "spring" as const,
+          stiffness: 600,
+          damping: 15
+        }
+      }}
       transition={{
         type: "spring",
         stiffness: 500,
         damping: 10
       }}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <AohsButton5Trim isActive={isActive} />
       {isExpanded && <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Trim</p>}
     </motion.div>
@@ -240,12 +411,12 @@ function Frame5({ activeButtons, onButtonClick }: { activeButtons: Set<number>; 
   const isExpanded = activeButtons.has(6);
   return (
     <div className="box-border content-stretch flex flex-col gap-[8px] items-stretch p-[8px] relative shrink-0 w-full">
-      <ToolbarTextLabel isActive={activeButtons.has(0)} onClick={() => onButtonClick(0)} isExpanded={isExpanded} />
-      <ToolbarTextLabel1 isActive={activeButtons.has(1)} onClick={() => onButtonClick(1)} isExpanded={isExpanded} />
-      <ToolbarTextLabel2 isActive={activeButtons.has(2)} onClick={() => onButtonClick(2)} isExpanded={isExpanded} />
-      <ToolbarTextLabel3 isActive={activeButtons.has(3)} onClick={() => onButtonClick(3)} isExpanded={isExpanded} />
-      <ToolbarTextLabel4 isActive={activeButtons.has(4)} onClick={() => onButtonClick(4)} isExpanded={isExpanded} />
-      <ToolbarTextLabel5 isActive={activeButtons.has(5)} onClick={() => onButtonClick(5)} isExpanded={isExpanded} />
+      <ToolbarTextLabel isActive={activeButtons.has(0)} onClick={() => onButtonClick(0)} isExpanded={isExpanded} buttonIndex={0} />
+      <ToolbarTextLabel1 isActive={activeButtons.has(1)} onClick={() => onButtonClick(1)} isExpanded={isExpanded} buttonIndex={1} />
+      <ToolbarTextLabel2 isActive={activeButtons.has(2)} onClick={() => onButtonClick(2)} isExpanded={isExpanded} buttonIndex={2} />
+      <ToolbarTextLabel3 isActive={activeButtons.has(3)} onClick={() => onButtonClick(3)} isExpanded={isExpanded} buttonIndex={3} />
+      <ToolbarTextLabel4 isActive={activeButtons.has(4)} onClick={() => onButtonClick(4)} isExpanded={isExpanded} buttonIndex={4} />
+      <ToolbarTextLabel5 isActive={activeButtons.has(5)} onClick={() => onButtonClick(5)} isExpanded={isExpanded} buttonIndex={5} />
     </div>
   );
 }

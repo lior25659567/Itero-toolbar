@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import svgPaths from "../imports/svg-76kjqgrbiw";
 
@@ -53,14 +53,48 @@ function MonoChomrNew() {
   );
 }
 
-function AohsButton({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
+function AohsButton({ isActive, onClick, buttonIndex }: { isActive: boolean; onClick: () => void; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
     <motion.div 
       className={`${isActive ? 'bg-[#DFF5FC]' : 'bg-white'} content-stretch flex items-center justify-center relative rounded-[4px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`} 
       data-name="AOHS button"
       onClick={onClick}
-      whileTap={{ scale: 0.95 }}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
+      whileTap={{ 
+        scale: 0.85,
+        transition: {
+          type: "spring" as const,
+          stiffness: 600,
+          damping: 15
+        }
+      }}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <div aria-hidden="true" className="absolute border-0 border-[#00adef] border-solid inset-0 pointer-events-none rounded-[4px]" />
       <div className="relative flex items-center justify-center size-full overflow-hidden">
         <MonoChomrNew />
@@ -69,11 +103,11 @@ function AohsButton({ isActive, onClick }: { isActive: boolean; onClick: () => v
   );
 }
 
-function ToolbarTextLabel({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
+function ToolbarTextLabel({ isActive, onClick, buttonIndex }: { isActive: boolean; onClick: () => void; buttonIndex?: number }) {
   // No change here, this is just a wrapper for the button
   return (
     <div className="content-stretch flex items-center relative rounded-[4px] shrink-0" data-name="Toolbar Text label">
-      <AohsButton isActive={isActive} onClick={onClick} />
+      <AohsButton isActive={isActive} onClick={onClick} buttonIndex={buttonIndex} />
     </div>
   );
 }
@@ -108,14 +142,48 @@ function FeedbackNew() {
   );
 }
 
-function AohsButton1({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
+function AohsButton1({ isActive, onClick, buttonIndex }: { isActive: boolean; onClick: () => void; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
     <motion.div 
       className={`${isActive ? 'bg-[#DFF5FC]' : 'bg-white'} content-stretch flex items-center justify-center relative rounded-[4px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`} 
       data-name="AOHS button"
       onClick={onClick}
-      whileTap={{ scale: 0.95 }}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
+      whileTap={{ 
+        scale: 0.85,
+        transition: {
+          type: "spring" as const,
+          stiffness: 600,
+          damping: 15
+        }
+      }}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <div aria-hidden="true" className="absolute border-0 border-[#00adef] border-solid inset-0 pointer-events-none rounded-[4px]" />
       <div className="relative flex items-center justify-center size-full overflow-hidden">
         <FeedbackNew />
@@ -124,11 +192,11 @@ function AohsButton1({ isActive, onClick }: { isActive: boolean; onClick: () => 
   );
 }
 
-function ToolbarTextLabel1({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
+function ToolbarTextLabel1({ isActive, onClick, buttonIndex }: { isActive: boolean; onClick: () => void; buttonIndex?: number }) {
   // No change here, this is just a wrapper for the button
   return (
     <div className="content-stretch flex items-center relative rounded-[4px] shrink-0" data-name="Toolbar Text label">
-      <AohsButton1 isActive={isActive} onClick={onClick} />
+      <AohsButton1 isActive={isActive} onClick={onClick} buttonIndex={buttonIndex} />
     </div>
   );
 }
@@ -186,14 +254,48 @@ function PrepEditToTest() {
   );
 }
 
-function AohsButton2({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
+function AohsButton2({ isActive, onClick, buttonIndex }: { isActive: boolean; onClick: () => void; buttonIndex?: number }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = () => {
+    if (buttonIndex !== undefined) {
+      setPressedButton(buttonIndex);
+    }
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
-    <motion.div 
-      className={`${isActive ? 'bg-[#DFF5FC]' : 'bg-white'} content-stretch flex items-center justify-center relative rounded-[4px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`} 
+    <motion.div
+      className={`${isActive ? 'bg-[#DFF5FC]' : 'bg-white'} content-stretch flex items-center justify-center relative rounded-[4px] shrink-0 size-[60px] cursor-pointer overflow-hidden p-[6px]`}
       data-name="AOHS button"
       onClick={onClick}
-      whileTap={{ scale: 0.95 }}
+      onTapStart={handleTapStart}
+      onTapEnd={handleTapEnd}
+      whileTap={{ 
+        scale: 0.85,
+        transition: {
+          type: "spring" as const,
+          stiffness: 600,
+          damping: 15
+        }
+      }}
     >
+      {pressedButton === buttonIndex && (
+        <motion.div
+          className="absolute inset-0 rounded-full pointer-events-none z-10"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+            filter: 'blur(12px)',
+          }}
+        />
+      )}
       <div aria-hidden="true" className="absolute border-0 border-[#00adef] border-solid inset-0 pointer-events-none rounded-[4px]" />
       <div className="relative flex items-center justify-center size-full overflow-hidden">
         <PrepEditToTest />
@@ -202,11 +304,11 @@ function AohsButton2({ isActive, onClick }: { isActive: boolean; onClick: () => 
   );
 }
 
-function ToolbarTextLabel2({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
+function ToolbarTextLabel2({ isActive, onClick, buttonIndex }: { isActive: boolean; onClick: () => void; buttonIndex?: number }) {
   // No change here, this is just a wrapper for the button
   return (
     <div className="content-stretch flex items-center relative rounded-[4px] shrink-0" data-name="Toolbar Text label">
-      <AohsButton2 isActive={isActive} onClick={onClick} />
+      <AohsButton2 isActive={isActive} onClick={onClick} buttonIndex={buttonIndex} />
     </div>
   );
 }
@@ -236,53 +338,129 @@ function ExpandedToolbar({
   microAnimations?: boolean;
   stackVertical?: boolean;
 }) {
+  const [pressedButton, setPressedButton] = useState<number | null>(null);
+  
+  const handleTapStart = (index: number) => {
+    setPressedButton(index);
+  };
+  
+  const handleTapEnd = () => {
+    setTimeout(() => setPressedButton(null), 300);
+  };
+  
   return (
     <div className="bg-white flex gap-[8px] items-stretch p-[8px] relative rounded-bl-[4px] rounded-tl-[4px] font-['Roboto'] h-[76px]">
       
       {/* Monochrome */}
       <motion.div 
-        className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
+        className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer relative overflow-hidden`}
         onClick={() => onButtonClick(0)}
-        whileTap={{ scale: 0.95 }}
+        onTapStart={() => handleTapStart(0)}
+        onTapEnd={handleTapEnd}
+        whileTap={{ 
+          scale: 0.88,
+          transition: {
+            type: "spring" as const,
+            stiffness: 600,
+            damping: 15
+          }
+        }}
       >
+        {pressedButton === 0 && (
+          <motion.div
+            className="absolute inset-0 rounded-full pointer-events-none z-10"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+              filter: 'blur(12px)',
+            }}
+          />
+        )}
         {stackVertical ? (
           <div className="scale-[0.5] origin-center">
-            <AohsButton isActive={activeButtons.has(0)} onClick={() => {}} />
+            <AohsButton isActive={activeButtons.has(0)} onClick={() => {}} buttonIndex={0} />
           </div>
         ) : (
-          <AohsButton isActive={activeButtons.has(0)} onClick={() => {}} />
+          <AohsButton isActive={activeButtons.has(0)} onClick={() => {}} buttonIndex={0} />
         )}
         <p className={`font-['Roboto'] text-black whitespace-nowrap text-center ${stackVertical ? 'text-[12px] leading-[14px]' : 'text-[14px] leading-[16px]'}`}>Monochrome</p>
       </motion.div>
 
       {/* Feedback */}
       <motion.div 
-        className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
+        className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer relative overflow-hidden`}
         onClick={() => onButtonClick(1)}
-        whileTap={{ scale: 0.95 }}
+        onTapStart={() => handleTapStart(1)}
+        onTapEnd={handleTapEnd}
+        whileTap={{ 
+          scale: 0.88,
+          transition: {
+            type: "spring" as const,
+            stiffness: 600,
+            damping: 15
+          }
+        }}
       >
+        {pressedButton === 1 && (
+          <motion.div
+            className="absolute inset-0 rounded-full pointer-events-none z-10"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+              filter: 'blur(12px)',
+            }}
+          />
+        )}
         {stackVertical ? (
           <div className="scale-[0.5] origin-center">
-            <AohsButton1 isActive={activeButtons.has(1)} onClick={() => {}} />
+            <AohsButton1 isActive={activeButtons.has(1)} onClick={() => {}} buttonIndex={1} />
           </div>
         ) : (
-          <AohsButton1 isActive={activeButtons.has(1)} onClick={() => {}} />
+          <AohsButton1 isActive={activeButtons.has(1)} onClick={() => {}} buttonIndex={1} />
         )}
         <p className={`font-['Roboto'] text-black whitespace-nowrap text-center ${stackVertical ? 'text-[12px] leading-[14px]' : 'text-[14px] leading-[16px]'}`}>Scan assist</p>
       </motion.div>
 
       {/* Prep Edit */}
       <motion.div 
-        className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer`}
+        className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} flex ${stackVertical ? 'flex-col items-center justify-center gap-[2px]' : 'items-center gap-[8px]'} py-[2px] px-[8px] rounded-[4px] cursor-pointer relative overflow-hidden`}
         onClick={() => onButtonClick(2)}
-        whileTap={{ scale: 0.95 }}
+        onTapStart={() => handleTapStart(2)}
+        onTapEnd={handleTapEnd}
+        whileTap={{ 
+          scale: 0.88,
+          transition: {
+            type: "spring" as const,
+            stiffness: 600,
+            damping: 15
+          }
+        }}
       >
+        {pressedButton === 2 && (
+          <motion.div
+            className="absolute inset-0 rounded-full pointer-events-none z-10"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 2.5, opacity: [0, 0.5, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%)',
+              filter: 'blur(12px)',
+            }}
+          />
+        )}
         {stackVertical ? (
           <div className="scale-[0.5] origin-center">
-            <AohsButton2 isActive={activeButtons.has(2)} onClick={() => {}} />
+            <AohsButton2 isActive={activeButtons.has(2)} onClick={() => {}} buttonIndex={2} />
           </div>
         ) : (
-          <AohsButton2 isActive={activeButtons.has(2)} onClick={() => {}} />
+          <AohsButton2 isActive={activeButtons.has(2)} onClick={() => {}} buttonIndex={2} />
         )}
         <p className={`font-['Roboto'] text-black whitespace-nowrap text-center ${stackVertical ? 'text-[12px] leading-[14px]' : 'text-[14px] leading-[16px]'}`}>Prep edit</p>
       </motion.div>
@@ -293,9 +471,9 @@ function ExpandedToolbar({
 function Frame4({ activeButtons, onButtonClick }: { activeButtons: Set<number>; onButtonClick: (index: number) => void }) {
   return (
     <div className="bg-white content-stretch flex gap-[8px] items-center p-[8px] relative rounded-bl-[4px] rounded-tl-[4px] self-stretch shrink-0 h-[76px]">
-      <ToolbarTextLabel isActive={activeButtons.has(0)} onClick={() => onButtonClick(0)} />
-      <ToolbarTextLabel1 isActive={activeButtons.has(1)} onClick={() => onButtonClick(1)} />
-      <ToolbarTextLabel2 isActive={activeButtons.has(2)} onClick={() => onButtonClick(2)} />
+      <ToolbarTextLabel isActive={activeButtons.has(0)} onClick={() => onButtonClick(0)} buttonIndex={0} />
+      <ToolbarTextLabel1 isActive={activeButtons.has(1)} onClick={() => onButtonClick(1)} buttonIndex={1} />
+      <ToolbarTextLabel2 isActive={activeButtons.has(2)} onClick={() => onButtonClick(2)} buttonIndex={2} />
     </div>
   );
 }
