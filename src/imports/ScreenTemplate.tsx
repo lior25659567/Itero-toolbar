@@ -92,7 +92,7 @@ function Component3DModelView({ activeButtons }: { activeButtons: Set<number> })
     );
   }
 
-  // When both monochrome (0) and Niri+Ion (1) buttons are active, show grayscale
+  // When both monochrome (0) and Review Tool (1) buttons are active, show grayscale
   if (activeButtons.has(0) && activeButtons.has(1)) {
     return (
       <div className="absolute left-1/2 size-[700px] top-[calc(50%+29px)] translate-x-[-50%] translate-y-[-50%]" data-name="3D model - Mary">
@@ -2473,11 +2473,13 @@ export default function ScreenTemplate({
   initialPage = 'scan',
   microAnimations = true,
   onBackToHome,
+  onNavigateToLayout,
   layout = 'vertical'
 }: {
   initialPage?: string;
   microAnimations?: boolean;
   onBackToHome?: () => void;
+  onNavigateToLayout?: (layout: 'home' | 'vertical' | 'horizontal' | 'horizontal-top' | 'horizontal-bottom') => void;
   layout?: 'vertical' | 'horizontal' | 'horizontal-top' | 'horizontal-bottom';
 } = {}) {
   const [currentPage, setCurrentPage] = useState<string>(initialPage);
@@ -2827,16 +2829,32 @@ export default function ScreenTemplate({
       )}
       <Frame4 currentPage={currentPage} />
       
-      {onBackToHome && (
-        <button
-          onClick={onBackToHome}
-          className="absolute bottom-[14px] right-[17px] flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-[#f3f3f5] transition-colors shadow-md"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-          <span>Home</span>
-        </button>
+      {(onBackToHome || onNavigateToLayout) && (
+        <div className="absolute top-[14px] left-[17px] z-50">
+          <select
+            onChange={(e) => {
+              const value = e.target.value as 'home' | 'vertical' | 'horizontal' | 'horizontal-top' | 'horizontal-bottom';
+              if (value === 'home' && onBackToHome) {
+                onBackToHome();
+              } else if (onNavigateToLayout) {
+                onNavigateToLayout(value);
+              }
+            }}
+            value={layout === 'vertical' ? 'vertical' : layout === 'horizontal' ? 'horizontal' : layout === 'horizontal-top' ? 'horizontal-top' : 'horizontal-bottom'}
+            className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-[#f3f3f5] transition-colors shadow-md border border-gray-200 cursor-pointer appearance-none pr-10 min-w-[200px]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 0.75rem center',
+              backgroundSize: '1.25em 1.25em'
+            }}
+          >
+            <option value="home">Back to Home</option>
+            <option value="vertical">Top Vertical Layout</option>
+            <option value="horizontal">Top Horizontal Layout</option>
+            <option value="horizontal-bottom">Bottom Layout</option>
+          </select>
+        </div>
       )}
     </div>
   );

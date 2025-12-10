@@ -140,7 +140,7 @@ function ToolbarTextLabel1() {
       <div className="flex flex-col items-center justify-center size-full">
         <div className="content-stretch flex flex-col items-center justify-center px-[8px] py-[4px] relative w-full">
           <AohsButton1 />
-          <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Niri+IOC</p>
+          <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Review Tool</p>
         </div>
       </div>
     </div>

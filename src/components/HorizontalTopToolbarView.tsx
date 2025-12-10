@@ -59,7 +59,7 @@ type ViewButtonConfig = {
 
 const viewButtons: ViewButtonConfig[] = [
   { label: "Monochrome", Icon: MonoChomrNew },
-  { label: "NIRI+IOC", Icon: NiriIonNew },
+  { label: "Review Tool", Icon: NiriIonNew },
   { label: "Occlusalgram", Icon: OcculsgramNew },
   { label: "Margin line", Icon: MarginLineNew },
   { label: "Prep QC", Icon: PrepQcNew },

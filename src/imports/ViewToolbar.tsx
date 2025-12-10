@@ -107,7 +107,7 @@ function ToolbarTextLabel1({ isActive, onClick, isExpanded }: { isActive: boolea
       }}
     >
       <AohsButton1 isActive={isActive} />
-      {isExpanded && <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Niri+ Ion</p>}
+      {isExpanded && <p className="font-['Roboto'] leading-[16px] not-italic relative shrink-0 text-[14px] text-black text-nowrap text-center">Review Tool</p>}
     </motion.div>
   );
 }

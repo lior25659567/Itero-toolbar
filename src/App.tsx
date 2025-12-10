@@ -15,6 +15,10 @@ export default function App() {
     setCurrentView('home');
   };
 
+  const handleNavigateToLayout = (layout: 'home' | 'vertical' | 'horizontal' | 'horizontal-top' | 'horizontal-bottom') => {
+    setCurrentView(layout);
+  };
+
   return (
     <div className="w-full h-full overflow-hidden relative">
       {currentView === 'home' && (
@@ -26,6 +30,7 @@ export default function App() {
           initialPage="scan"
           microAnimations={true}
           onBackToHome={handleBackToHome}
+          onNavigateToLayout={handleNavigateToLayout}
         />
       )}
       
@@ -34,6 +39,7 @@ export default function App() {
           initialPage="scan"
           microAnimations={true}
           onBackToHome={handleBackToHome}
+          onNavigateToLayout={handleNavigateToLayout}
           layout="horizontal"
         />
       )}
@@ -43,6 +49,7 @@ export default function App() {
           initialPage="scan"
           microAnimations={true}
           onBackToHome={handleBackToHome}
+          onNavigateToLayout={handleNavigateToLayout}
           layout="horizontal-top"
         />
       )}
@@ -52,6 +59,7 @@ export default function App() {
           initialPage="scan"
           microAnimations={true}
           onBackToHome={handleBackToHome}
+          onNavigateToLayout={handleNavigateToLayout}
           layout="horizontal-bottom"
         />
       )}

@@ -93,7 +93,7 @@ function CollapsedToolbar({
           </div>
         </motion.div>
 
-        {/* Button 1: NIRI+IOC */}
+        {/* Button 1: Review Tool */}
         <motion.div 
           className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
           custom={activeButtons.has(1)}
@@ -202,7 +202,7 @@ function ExpandedToolbar({
           <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">Monochrome</p>
         </motion.div>
 
-        {/* Button 1: NIRI+IOC */}
+        {/* Button 1: Review Tool */}
         <motion.div 
           className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[6px] cursor-pointer flex items-center gap-[6px] h-[60px]`}
           custom={activeButtons.has(1)}
@@ -214,7 +214,7 @@ function ExpandedToolbar({
               <NiriIonNew />
             </div>
           </div>
-          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">NIRI+IOC</p>
+          <p className="font-['Roboto'] text-[11px] leading-[14px] text-black whitespace-nowrap">Review Tool</p>
         </motion.div>
 
         {/* Button 2: Occlusalgram */}
