@@ -237,6 +237,17 @@ export default function HorizontalScreenTemplate({
         } else {
           newSet.add(index);
         }
+      } 
+      // Margin Line (index 3) and Trim (index 5) are mutually exclusive
+      else if (index === 3 || index === 5) {
+        const otherIndex = index === 3 ? 5 : 3;
+        newSet.delete(otherIndex);
+        
+        if (newSet.has(index)) {
+          newSet.delete(index);
+        } else {
+          newSet.add(index);
+        }
       } else {
         if (newSet.has(index)) {
           newSet.delete(index);
@@ -269,6 +280,17 @@ export default function HorizontalScreenTemplate({
       // Occlusalgram (index 2) and Prep QC (index 4) are mutually exclusive
       if (index === 2 || index === 4) {
         const otherIndex = index === 2 ? 4 : 2;
+        newSet.delete(otherIndex);
+        
+        if (newSet.has(index)) {
+          newSet.delete(index);
+        } else {
+          newSet.add(index);
+        }
+      } 
+      // Margin Line (index 3) and Trim (index 5) are mutually exclusive
+      else if (index === 3 || index === 5) {
+        const otherIndex = index === 3 ? 5 : 3;
         newSet.delete(otherIndex);
         
         if (newSet.has(index)) {

@@ -2512,6 +2512,17 @@ export default function ScreenTemplate({
         } else {
           newSet.add(index); // Toggle on
         }
+      } 
+      // Margin Line (index 3) and Trim (index 5) are mutually exclusive
+      else if (index === 3 || index === 5) {
+        const otherIndex = index === 3 ? 5 : 3;
+        newSet.delete(otherIndex); // Deactivate the other button
+        
+        if (newSet.has(index)) {
+          newSet.delete(index); // Toggle off if already active
+        } else {
+          newSet.add(index); // Toggle on
+        }
       } else {
         // Normal toggle behavior for other buttons
         if (newSet.has(index)) {
