@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "motion/react";
 import svgPaths from "../imports/svg-34vouhfnvt";
 import NiriIonNew from "../imports/NiriIonNew";
@@ -86,6 +87,8 @@ function CollapsedToolbar({
   onButtonClick: (index: number) => void;
   microAnimations?: boolean;
 }) {
+  const [tappedButton, setTappedButton] = useState<number | null>(null);
+  
   const animationProps = microAnimations ? {
     animate: (isActive: boolean) => ({
       scale: isActive ? 1.08 : 1,
@@ -97,57 +100,128 @@ function CollapsedToolbar({
       damping: 10
     }
   } : {};
+  
+  const handleButtonClick = (index: number) => {
+    setTappedButton(index);
+    setTimeout(() => setTappedButton(null), 400);
+    onButtonClick(index);
+  };
 
   return (
     <div className="bg-white rounded-[4px] flex items-center font-['Roboto'] p-[8px] h-[76px]">
       <div className="flex items-center gap-[16px] px-[8px]">
         {/* Button 0: Monochrome */}
         <motion.div 
-          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
+          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(0)}
-          onClick={() => onButtonClick(0)}
+          onClick={() => handleButtonClick(0)}
           {...animationProps}
         >
+          {tappedButton === 0 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <MonoChomrNew />
         </motion.div>
 
         {/* Button 1: Review Tool */}
         <motion.div 
-          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
+          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(1)}
-          onClick={() => onButtonClick(1)}
+          onClick={() => handleButtonClick(1)}
           {...animationProps}
         >
+          {tappedButton === 1 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <NiriIonNew />
         </motion.div>
 
         {/* Button 2: Occlusalgram */}
         <motion.div 
-          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
+          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(2)}
-          onClick={() => onButtonClick(2)}
+          onClick={() => handleButtonClick(2)}
           {...animationProps}
         >
+          {tappedButton === 2 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <OcculsgramNew />
         </motion.div>
 
         {/* Button 3: Margin Line */}
         <motion.div 
-          className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
+          className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(3)}
-          onClick={() => onButtonClick(3)}
+          onClick={() => handleButtonClick(3)}
           {...animationProps}
         >
+          {tappedButton === 3 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <MarginLineNew />
         </motion.div>
 
         {/* Button 4: Prep QC */}
         <motion.div 
-          className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
+          className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(4)}
-          onClick={() => onButtonClick(4)}
+          onClick={() => handleButtonClick(4)}
           {...animationProps}
         >
+          {tappedButton === 4 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="size-[60px]">
             <PrepQcNew />
           </div>
@@ -155,11 +229,24 @@ function CollapsedToolbar({
 
         {/* Button 5: Trim */}
         <motion.div 
-          className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px]`}
+          className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] cursor-pointer flex items-center justify-center size-[60px] relative overflow-hidden`}
           custom={activeButtons.has(5)}
-          onClick={() => onButtonClick(5)}
+          onClick={() => handleButtonClick(5)}
           {...animationProps}
         >
+          {tappedButton === 5 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="size-[60px]">
             <TrimNew />
           </div>
@@ -188,6 +275,8 @@ function ExpandedToolbar({
   onButtonClick: (index: number) => void;
   microAnimations?: boolean;
 }) {
+  const [tappedButton, setTappedButton] = useState<number | null>(null);
+  
   const animationProps = microAnimations ? {
     animate: (isActive: boolean) => ({
       scale: isActive ? 1.05 : 1,
@@ -199,17 +288,36 @@ function ExpandedToolbar({
       damping: 10
     }
   } : {};
+  
+  const handleButtonClick = (index: number) => {
+    setTappedButton(index);
+    setTimeout(() => setTappedButton(null), 400);
+    onButtonClick(index);
+  };
 
   return (
     <div className="bg-white rounded-[4px] flex items-center font-['Roboto'] py-[12px] px-[12px] min-h-[120px]">
       <div className="flex items-center gap-[16px] flex-1 px-[8px]">
         {/* Button 0: Monochrome */}
         <motion.div 
-          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
+          className={`${activeButtons.has(0) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] relative overflow-hidden`}
           custom={activeButtons.has(0)}
-          onClick={() => onButtonClick(0)}
+          onClick={() => handleButtonClick(0)}
           {...animationProps}
         >
+          {tappedButton === 0 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="flex items-center justify-center w-[32px] h-[32px]">
             <div className="scale-[0.53]">
               <MonoChomrNew />
@@ -220,11 +328,24 @@ function ExpandedToolbar({
 
         {/* Button 1: Review Tool */}
         <motion.div 
-          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
+          className={`${activeButtons.has(1) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] relative overflow-hidden`}
           custom={activeButtons.has(1)}
-          onClick={() => onButtonClick(1)}
+          onClick={() => handleButtonClick(1)}
           {...animationProps}
         >
+          {tappedButton === 1 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="flex items-center justify-center w-[32px] h-[32px]">
             <div className="scale-[0.53]">
               <NiriIonNew />
@@ -235,11 +356,24 @@ function ExpandedToolbar({
 
         {/* Button 2: Occlusalgram */}
         <motion.div 
-          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
+          className={`${activeButtons.has(2) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] relative overflow-hidden`}
           custom={activeButtons.has(2)}
-          onClick={() => onButtonClick(2)}
+          onClick={() => handleButtonClick(2)}
           {...animationProps}
         >
+          {tappedButton === 2 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="flex items-center justify-center w-[32px] h-[32px]">
             <div className="scale-[0.53]">
               <OcculsgramNew />
@@ -250,11 +384,24 @@ function ExpandedToolbar({
 
         {/* Button 3: Margin Line */}
         <motion.div 
-          className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px]`}
+          className={`${activeButtons.has(3) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[8px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] relative overflow-hidden`}
           custom={activeButtons.has(3)}
-          onClick={() => onButtonClick(3)}
+          onClick={() => handleButtonClick(3)}
           {...animationProps}
         >
+          {tappedButton === 3 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="flex items-center justify-center w-[32px] h-[32px]">
             <div className="scale-[0.53]">
               <MarginLineNew />
@@ -265,11 +412,24 @@ function ExpandedToolbar({
 
         {/* Button 4: Prep QC */}
         <motion.div 
-          className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[12px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-w-[70px]`}
+          className={`${activeButtons.has(4) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[12px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-w-[70px] relative overflow-hidden`}
           custom={activeButtons.has(4)}
-          onClick={() => onButtonClick(4)}
+          onClick={() => handleButtonClick(4)}
           {...animationProps}
         >
+          {tappedButton === 4 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="w-[32px] h-[32px] relative shrink-0">
             <div className="absolute left-1/2 top-1/2 size-[60px] origin-center" style={{ transform: 'translate(-50%, -50%) scale(1.05) translate(-2px, -2px)' }}>
               <PrepQcNew />
@@ -280,11 +440,24 @@ function ExpandedToolbar({
 
         {/* Button 5: Trim */}
         <motion.div 
-          className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[12px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-w-[70px]`}
+          className={`${activeButtons.has(5) ? 'bg-[#DFF5FC]' : ''} rounded-[4px] px-[12px] py-[12px] cursor-pointer flex flex-col items-center justify-center gap-[4px] min-w-[70px] relative overflow-hidden`}
           custom={activeButtons.has(5)}
-          onClick={() => onButtonClick(5)}
+          onClick={() => handleButtonClick(5)}
           {...animationProps}
         >
+          {tappedButton === 5 && (
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 2.5, opacity: [0, 0.4, 0] }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{
+                background: 'radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%)',
+                filter: 'blur(10px)',
+              }}
+            />
+          )}
           <div className="w-[32px] h-[32px] relative shrink-0">
             <div className="absolute left-1/2 top-1/2 size-[60px] origin-center" style={{ transform: 'translate(-50%, -50%) scale(1.05)' }}>
               <TrimNew />
