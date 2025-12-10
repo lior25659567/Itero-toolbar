@@ -317,7 +317,7 @@ function Component() {
 function HeaderWizardAtoms1({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
   return (
     <div 
-      className={`relative shrink-0 size-[60px] cursor-pointer ${isActive ? 'bg-[#cceffc] rounded-[10px]' : ''}`} 
+      className={`relative shrink-0 size-[60px] cursor-pointer ${isActive ? 'bg-[#cceffc] rounded-[4px]' : ''}`} 
       data-name="./Header/Wizard atoms"
       onClick={onClick}
     >
@@ -464,7 +464,7 @@ function Icon1() {
 function HeaderWizardAtoms2({ isActive, onClick }: { isActive: boolean; onClick: () => void }) {
   return (
     <div 
-      className={`relative shrink-0 size-[60px] cursor-pointer ${isActive ? 'bg-[#DFF5FC] rounded-[10px]' : ''}`} 
+      className={`relative shrink-0 size-[60px] cursor-pointer ${isActive ? 'bg-[#DFF5FC] rounded-[4px]' : ''}`} 
       data-name="./Header/Wizard atoms"
       onClick={onClick}
     >
@@ -2842,29 +2842,34 @@ export default function ScreenTemplate({
       
       {(onBackToHome || onNavigateToLayout) && (
         <div className="absolute top-[14px] left-[17px] z-50">
-          <select
-            onChange={(e) => {
-              const value = e.target.value as 'home' | 'vertical' | 'horizontal-top' | 'horizontal-bottom';
-              if (value === 'home' && onBackToHome) {
-                onBackToHome();
-              } else if (onNavigateToLayout) {
-                onNavigateToLayout(value);
-              }
-            }}
-            value={layout === 'vertical' ? 'vertical' : layout === 'horizontal-top' ? 'horizontal-top' : 'horizontal-bottom'}
-            className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-[#f3f3f5] transition-colors shadow-md border border-gray-200 cursor-pointer min-w-[200px] [appearance:none] [-webkit-appearance:none] [-moz-appearance:none] pr-10"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.75rem center',
-              backgroundSize: '1.25em 1.25em'
-            }}
-          >
-            <option value="home">Back to Home</option>
-            <option value="vertical">Vertical Layout</option>
-            <option value="horizontal-top">Horizontal Top Layout</option>
-            <option value="horizontal-bottom">Horizontal Bottom Layout</option>
-          </select>
+          <div className="relative overflow-hidden">
+            <select
+              onChange={(e) => {
+                const value = e.target.value as 'home' | 'vertical' | 'horizontal-top' | 'horizontal-bottom';
+                if (value === 'home' && onBackToHome) {
+                  onBackToHome();
+                } else if (onNavigateToLayout) {
+                  onNavigateToLayout(value);
+                }
+              }}
+              value={layout === 'vertical' ? 'vertical' : layout === 'horizontal-top' ? 'horizontal-top' : 'horizontal-bottom'}
+              className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-[#f3f3f5] transition-colors shadow-md border border-gray-200 cursor-pointer min-w-[200px] pr-10 outline-none w-full"
+              style={{
+                appearance: 'none',
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 0.75rem center',
+                backgroundSize: '1.25em 1.25em'
+              }}
+            >
+              <option value="home">Back to Home</option>
+              <option value="vertical">Vertical Layout</option>
+              <option value="horizontal-top">Horizontal Top Layout</option>
+              <option value="horizontal-bottom">Horizontal Bottom Layout</option>
+            </select>
+          </div>
         </div>
       )}
     </div>

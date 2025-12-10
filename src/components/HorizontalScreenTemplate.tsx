@@ -475,23 +475,28 @@ export default function HorizontalScreenTemplate({
       {/* Navigation dropdown */}
       {onBackToHome && (
         <div className="absolute top-[14px] left-[17px] z-50">
-          <select
-            onChange={(e) => {
-              if (e.target.value === 'home' && onBackToHome) {
-                onBackToHome();
-              }
-            }}
-            defaultValue="home"
-            className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-[#f3f3f5] transition-colors shadow-md border border-gray-200 cursor-pointer min-w-[200px] [appearance:none] [-webkit-appearance:none] [-moz-appearance:none] pr-10"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.75rem center',
-              backgroundSize: '1.25em 1.25em'
-            }}
-          >
-            <option value="home">Back to Home</option>
-          </select>
+          <div className="relative overflow-hidden">
+            <select
+              onChange={(e) => {
+                if (e.target.value === 'home' && onBackToHome) {
+                  onBackToHome();
+                }
+              }}
+              defaultValue="home"
+              className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-[#f3f3f5] transition-colors shadow-md border border-gray-200 cursor-pointer min-w-[200px] pr-10 outline-none w-full"
+              style={{
+                appearance: 'none',
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 0.75rem center',
+                backgroundSize: '1.25em 1.25em'
+              }}
+            >
+              <option value="home">Back to Home</option>
+            </select>
+          </div>
         </div>
       )}
     </div>

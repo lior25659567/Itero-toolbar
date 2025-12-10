@@ -1633,7 +1633,7 @@ function Frame5() {
 function IconsLower() {
   return (
     <div className="h-[60px] relative shrink-0 w-full" data-name="IconsLower">
-      <div className="overflow-clip rounded-[inherit] size-full">
+      <div className="overflow-clip rounded-[4px] size-full">
         <div className="content-stretch flex flex-col h-[60px] items-start pb-0 pl-[6px] pr-[5px] pt-[12px] relative w-full">
           <Frame5 />
         </div>
