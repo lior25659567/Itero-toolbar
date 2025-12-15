@@ -8,6 +8,7 @@ import imgScreenshot20240318At1457BackgroundRemovedGrayscaleFeedback from "figma
 import imgImage67 from "figma:asset/49d9f38076a6194269e46687b9daac8309b85fb1.png";
 import imgOcclusionHeatmap from "figma:asset/c17f0d7025aceb7deb5df75b4c464fa4ec74f5de.png";
 import imgOcclusionHeatmapMonochrome from "figma:asset/d411b5f7af6c8dc24f1c68de9edcc7cc38e7016d.png";
+import imgMarginLineView from "../assets/button-images/margin-line/dental-arch-margin-view.png";
 import { imgPath4141, imgGroup2917 } from "./svg-fvlvg";
 import Frame1618872975 from "./Frame1618872975";
 import Toolbar from "./Toolbar-73-13616";
@@ -75,20 +76,33 @@ function Component3DModelMary({ activeButtons }: { activeButtons: Set<number> })
 }
 
 function Component3DModelView({ activeButtons }: { activeButtons: Set<number> }) {
-  // When both Occulsgram (2) and Monochrome (0) buttons are active, show monochrome heatmap
+  // 1) Margin Line overrides everything when active (button index 3)
+  if (activeButtons.has(3)) {
+    return (
+      <div
+        className="absolute left-1/2 w-[900px] h-[700px] top-[calc(50%+40px)] translate-x-[-50%] translate-y-[-50%]"
+        data-name="3D model - Mary - Margin Line"
+      >
+        <div className="absolute inset-[4%]" data-name="Margin Line View">
+          <img
+            alt="Dental arch - Margin line view"
+            className="absolute inset-0 max-w-none object-50%-50% object-contain pointer-events-none size-full"
+            src={imgMarginLineView}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // 2) When both Occlusalgram (2) and Monochrome (0) buttons are active, show monochrome heatmap
   if (activeButtons.has(0) && activeButtons.has(2)) {
     return (
       <div className="absolute left-1/2 size-[700px] top-[calc(50%+29px)] translate-x-[-50%] translate-y-[-50%]" data-name="3D model - Mary">
         <motion.div 
           className="absolute inset-[14.06%_2.37%_14.12%_-2%]" 
           data-name="Screenshot 2024-03-18 at 14.57 Background Removed"
-          animate={{
-            scale: activeButtons.has(3) ? 2.5 : 1,
-          }}
-          transition={{
-            duration: 0.6,
-            ease: "easeInOut"
-          }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           <img alt="Occlusion heatmap monochrome" className="absolute inset-0 max-w-none object-50%-50% object-contain pointer-events-none size-full" src={imgOcclusionHeatmapMonochrome} />
         </motion.div>
@@ -96,20 +110,15 @@ function Component3DModelView({ activeButtons }: { activeButtons: Set<number> })
     );
   }
 
-  // When both monochrome (0) and Review Tool (1) buttons are active, show grayscale
+  // 3) When both monochrome (0) and Review Tool (1) buttons are active, show grayscale
   if (activeButtons.has(0) && activeButtons.has(1)) {
     return (
       <div className="absolute left-1/2 size-[700px] top-[calc(50%+29px)] translate-x-[-50%] translate-y-[-50%]" data-name="3D model - Mary">
         <motion.div 
           className="absolute bottom-[14.62%] left-0 right-[3.87%] top-[13.81%]" 
           data-name="Screenshot 2024-03-18 at 14.57 Background Removed"
-          animate={{
-            scale: activeButtons.has(3) ? 2.5 : 1,
-          }}
-          transition={{
-            duration: 0.6,
-            ease: "easeInOut"
-          }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           <img alt="" className="absolute inset-0 max-w-none object-50%-50% object-contain pointer-events-none size-full" src={imgScreenshot20240318At1457BackgroundRemovedGrayscale} />
         </motion.div>
@@ -117,20 +126,15 @@ function Component3DModelView({ activeButtons }: { activeButtons: Set<number> })
     );
   }
 
-  // When monochrome button (index 0) is active, show grayscale dental arch top-down view
+  // 4) When monochrome button (index 0) is active, show grayscale dental arch top-down view
   if (activeButtons.has(0)) {
     return (
       <div className="absolute left-1/2 size-[700px] top-[calc(50%+29px)] translate-x-[-50%] translate-y-[-50%]" data-name="3D model - Mary">
         <motion.div 
           className="absolute bottom-[14.62%] left-0 right-[3.87%] top-[13.81%]" 
           data-name="Screenshot 2024-03-18 at 14.57 Background Removed"
-          animate={{
-            scale: activeButtons.has(3) ? 2.5 : 1,
-          }}
-          transition={{
-            duration: 0.6,
-            ease: "easeInOut"
-          }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           <img alt="" className="absolute inset-0 max-w-none object-50%-50% object-contain pointer-events-none size-full" src={imgScreenshot20240318At1457BackgroundRemovedGrayscale} />
         </motion.div>
@@ -138,7 +142,7 @@ function Component3DModelView({ activeButtons }: { activeButtons: Set<number> })
     );
   }
 
-  // When Occulsgram button (index 2) is active, show heatmap
+  // 5) When Occlusalgram button (index 2) is active, show heatmap
   if (activeButtons.has(2)) {
     return (
       <div className="absolute left-1/2 size-[700px] top-[calc(50%+29px)] translate-x-[-50%] translate-y-[-50%]" data-name="3D model - Mary">
@@ -2484,7 +2488,8 @@ export default function ScreenTemplate({
   onPageChange: externalOnPageChange,
   onButtonClick: externalOnButtonClick,
   onViewButtonClick: externalOnViewButtonClick,
-  combinedPanelMode = false
+  combinedPanelMode = false,
+  onCombinedPanelModeChange,
 }: {
   initialPage?: string;
   microAnimations?: boolean;
@@ -2497,6 +2502,7 @@ export default function ScreenTemplate({
   onButtonClick?: (index: number) => void;
   onViewButtonClick?: (index: number) => void;
   combinedPanelMode?: boolean;
+  onCombinedPanelModeChange?: (enabled: boolean) => void;
 } = {}) {
   // Use external state if provided, otherwise use local state (for backward compatibility)
   const [localCurrentPage, setLocalCurrentPage] = useState<string>(initialPage);
@@ -2910,16 +2916,20 @@ export default function ScreenTemplate({
       <Frame4 currentPage={currentPage} />
       
       {(onBackToHome || onNavigateToLayout) && (
-        <div className="absolute top-[14px] left-[17px] z-50">
+        // Layout switcher + combined toggle, positioned just under the \"New Scan\" title, aligned more to the left
+        <div className="absolute top-[96px] left-[32px] z-50">
           <LayoutSwitcher
             currentLayout={
               layout === 'vertical' ? 'vertical' 
+              : layout === 'horizontal' ? 'horizontal'
               : layout === 'horizontal-top' ? 'horizontal-top' 
               : layout === 'horizontal-bottom' ? 'horizontal-bottom'
-              : 'horizontal-bottom' // fallback for 'horizontal'
+              : 'vertical'
             }
             onNavigateToLayout={onNavigateToLayout || (() => {})}
             onBackToHome={onBackToHome}
+            combinedPanelMode={combinedPanelMode}
+            onCombinedPanelModeChange={onCombinedPanelModeChange}
           />
         </div>
       )}
