@@ -1,6 +1,7 @@
 import svgPaths from "./svg-g9s2tj7i90";
 import imgScreenshot20221109At13091 from "figma:asset/22c8274398284723cf97f1470cd780174dd5439c.png";
 import imgScreenShot20220727At2350 from "figma:asset/85992d98a85ebda774e1363fea1b11c53b299457.png";
+import imgScreenshot20240318At1457BackgroundRemoved from "figma:asset/a1dfc57a055d32f098369f51df6fd0791a341b87.png";
 
 function NiriIocImages() {
   return (
@@ -30,7 +31,7 @@ function NiriIocImages1() {
   return (
     <div className="absolute inset-[50.23%_1.85%_0.94%_7.41%]" data-name="NIRI + IOC Images">
       <div className="absolute bottom-[0.25%] left-0 right-0 rounded-[4px] top-0" data-name="Screen Shot 2022-07-27 at 23.50">
-        <img alt="" className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none rounded-[4px] size-full" src={imgScreenShot20220727At2350} />
+        <img alt="" className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none rounded-[4px] size-full" src={imgScreenshot20240318At1457BackgroundRemoved} />
       </div>
       <Group4 />
     </div>

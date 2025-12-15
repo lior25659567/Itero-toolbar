@@ -1,9 +1,7 @@
+import React from "react";
 import svgPaths from "../imports/svg-rjhxv8zxsn";
-import svgPathsNiri from "../imports/svg-wi5n7xzoah";
-import imgScreenshot20221115At16261 from "figma:asset/1447eb3fe8363533ebdc60265425e3f1dac685e7.png";
-import imgScreenshot20221109At13092 from "figma:asset/22c8274398284723cf97f1470cd780174dd5439c.png";
 
-// Margin Line Panel Components
+// --- Margin Line Panel Components (Unchanged) ---
 function Text() {
   return (
     <div className="h-[22.5px] relative shrink-0 w-[118.828px]" data-name="Text">
@@ -361,48 +359,98 @@ function Frame() {
   );
 }
 
-// Review Tool Images Components - Responsive images that fit within panel
+function ReviewToolHeader() {
+  return (
+    <div className="bg-[#00adef] relative shrink-0 w-full" data-name="Review Tool Header">
+      <div aria-hidden="true" className="absolute border-[#0099d6] border-[0px_0px_1px] border-solid inset-0 pointer-events-none" />
+      <div className="flex flex-row items-center size-full">
+        <div className="content-stretch flex items-center pb-[17px] pt-[16px] px-[16px] relative w-full">
+          <div className="h-[22.5px] relative shrink-0">
+            <div className="bg-clip-padding border-0 border-[transparent] border-solid h-[22.5px] relative">
+              <p className="absolute font-['Roboto:Medium',sans-serif] font-medium leading-[30px] left-0 text-[24px] text-nowrap text-white top-[-1px] whitespace-pre" style={{ fontVariationSettings: "'wdth' 100" }}>
+                Review Tool
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Review Tool Images Components - SVG Placeholders that STRETCH
 function ReviewToolImages() {
   return (
-    <div className="flex flex-col gap-[8px] px-[16px] pb-[16px] pt-[16px] w-full bg-white border-t border-[#e0e0e0]" data-name="Review Tool Images">
-      {/* Review Tool Section Header */}
-      <div className="px-0 py-[8px]">
-        <p className="font-['Roboto:Medium',sans-serif] font-medium text-[18px] text-[#3e3d40]">Review Tool</p>
-      </div>
-      
-      {/* First Image - Color photo */}
-      <div className="relative w-full rounded-[4px] overflow-hidden bg-gray-100" style={{ aspectRatio: '1 / 1.06', minHeight: '200px' }}>
-        <img 
-          alt="Review Tool - Color Image" 
-          className="w-full h-full object-cover" 
-          src={imgScreenshot20221115At16261} 
-        />
+    <div className="w-full h-full bg-white flex flex-col" data-name="Review Tool Images">
+      {/* Container fills ALL available height and splits evenly between two images */}
+      <div className="flex-1 min-h-0 flex flex-col gap-[8px] p-[16px]">
+        
+        {/* First Placeholder - Color Image - STRETCHES to fill 50% of available height */}
+        <div className="w-full flex-1 min-h-0 rounded-[4px] overflow-hidden bg-gradient-to-br from-cyan-50 to-cyan-100 border-2 border-cyan-300 flex items-center justify-center">
+          <svg className="w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="none">
+            <rect width="400" height="300" fill="url(#gradient1)" />
+            <circle cx="200" cy="150" r="60" fill="white" opacity="0.2" />
+            <text x="200" y="140" textAnchor="middle" fill="#0891b2" fontSize="28" fontWeight="bold">Color Image</text>
+            <text x="200" y="175" textAnchor="middle" fill="#06b6d4" fontSize="18">Upper Arch View</text>
+            <defs>
+              <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#cffafe" />
+                <stop offset="100%" stopColor="#a5f3fc" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        
+        {/* Second Placeholder - NIRI Image - STRETCHES to fill 50% of available height */}
+        <div className="w-full flex-1 min-h-0 rounded-[4px] overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-300 flex items-center justify-center">
+          <svg className="w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="none">
+            <rect width="400" height="300" fill="url(#gradient2)" />
+            <circle cx="200" cy="150" r="60" fill="white" opacity="0.2" />
+            <text x="200" y="140" textAnchor="middle" fill="#475569" fontSize="28" fontWeight="bold">NIRI Scan</text>
+            <text x="200" y="175" textAnchor="middle" fill="#64748b" fontSize="18">Lower Arch View</text>
+            <defs>
+              <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#e2e8f0" />
+                <stop offset="100%" stopColor="#cbd5e1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
       </div>
     </div>
   );
 }
 
 /**
- * Combined responsive panel that integrates Margin Line controls with Review Tool images
- * when both buttons are active in the view page.
- * Based on Figma design: https://www.figma.com/design/ZdRSh9tq2yez5zPBDkj2kC/iTero-Toolbar-concept?node-id=1544-125162
+ * Combined Responsive Panel
+ * 1. Margin Panel: shrink-0 (Natural height)
+ * 2. Review Panel: flex-1 (Fills remaining height)
+ * 3. Images: absolute/inset-0 (Forced to fit container size exactly)
  */
 export default function CombinedReviewMarginPanel() {
   return (
-    <div className="flex flex-col items-start relative w-[284px] max-h-[846px] overflow-y-auto bg-white rounded-[4px] shadow-lg" data-name="Combined Review Margin Panel">
-      {/* Margin Line Section */}
-      <div className="w-full">
+    <div 
+      className="flex flex-col p-[16px] relative w-[432px] bg-[#f5f5f5] rounded-[4px] shadow-lg gap-[16px]" 
+      style={{ height: 'calc(100vh - 109px)' }}
+      data-name="Combined Review Margin Panel"
+    >
+      
+      {/* Margin Line Section - Natural height */}
+      <div className="w-full shrink-0 rounded-[4px] overflow-hidden shadow-md bg-white flex flex-col">
         <Container />
         <ListItem />
         <Frame />
       </div>
       
-      {/* Visual Separator */}
-      <div className="w-full h-[1px] bg-[#e0e0e0] my-[8px]" />
-      
-      {/* Review Tool Section */}
-      <div className="w-full">
-        <ReviewToolImages />
+      {/* Review Tool Section - STRETCHES TO FILL ALL REMAINING HEIGHT */}
+      <div className="w-full flex-1 min-h-0 rounded-[4px] overflow-hidden shadow-md bg-white flex flex-col">
+        <div className="shrink-0">
+          <ReviewToolHeader />
+        </div>
+        {/* Images Container - Fills all remaining space and stretches */}
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <ReviewToolImages />
+        </div>
       </div>
     </div>
   );

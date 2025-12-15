@@ -11,6 +11,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<string>('scan');
   const [activeButtons, setActiveButtons] = useState<Set<number>>(new Set());
   const [viewActiveButtons, setViewActiveButtons] = useState<Set<number>>(new Set());
+  const [combinedPanelMode, setCombinedPanelMode] = useState<boolean>(false);
 
   const handleSelectLayout = (layout: 'vertical' | 'horizontal' | 'horizontal-top' | 'horizontal-bottom') => {
     setCurrentView(layout);
@@ -87,7 +88,11 @@ export default function App() {
   return (
     <div className="w-full h-full overflow-hidden relative">
       {currentView === 'home' && (
-        <HomePage onSelectLayout={handleSelectLayout} />
+        <HomePage 
+          onSelectLayout={handleSelectLayout}
+          combinedPanelMode={combinedPanelMode}
+          onCombinedPanelModeChange={setCombinedPanelMode}
+        />
       )}
       
       {currentView === 'vertical' && (
@@ -102,6 +107,7 @@ export default function App() {
           onPageChange={handlePageChange}
           onButtonClick={handleButtonClick}
           onViewButtonClick={handleViewButtonClick}
+          combinedPanelMode={combinedPanelMode}
         />
       )}
       
@@ -117,6 +123,7 @@ export default function App() {
           onPageChange={handlePageChange}
           onButtonClick={handleButtonClick}
           onViewButtonClick={handleViewButtonClick}
+          combinedPanelMode={combinedPanelMode}
         />
       )}
       
@@ -132,6 +139,7 @@ export default function App() {
           onPageChange={handlePageChange}
           onButtonClick={handleButtonClick}
           onViewButtonClick={handleViewButtonClick}
+          combinedPanelMode={combinedPanelMode}
         />
       )}
 
@@ -147,6 +155,7 @@ export default function App() {
           onPageChange={handlePageChange}
           onButtonClick={handleButtonClick}
           onViewButtonClick={handleViewButtonClick}
+          combinedPanelMode={combinedPanelMode}
         />
       )}
 

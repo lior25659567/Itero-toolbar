@@ -26,3 +26,5 @@ echo "  7. Click 'Deploy site'"
 echo ""
 echo "Your site will be live at: https://[random-name].netlify.app"
 echo "You can customize the domain name in Netlify settings."
+
+

@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import svgPaths from "./svg-vyw91xr0mn";
+// Organized button images (using figma:asset for reliability)
+import imgDentalArchColor from "figma:asset/a1dfc57a055d32f098369f51df6fd0791a341b87.png";
+import imgDentalArchGrayscale from "figma:asset/d986e19df0e9c14222abc9c62ff49e0276238d2a.png";
+import imgDentalArchColorFeedback from "figma:asset/7235f98944aa9efc68796aee3f4ed01c409cbea7.png";
+import imgDentalArchGrayscaleFeedback from "figma:asset/d8e804204d336774af7dc7e2a6b5aeb59aa2b508.png";
+import imgMarginLineView from "../assets/button-images/margin-line/dental-arch-margin-view.png";
+
+// Legacy imports (for backwards compatibility)
 import imgScreenshot20240318At1457BackgroundRemoved from "figma:asset/a1dfc57a055d32f098369f51df6fd0791a341b87.png";
 import imgScreenshot20240318At1457BackgroundRemovedGrayscale from "figma:asset/d986e19df0e9c14222abc9c62ff49e0276238d2a.png";
 import imgScreenshot20240318At1457BackgroundRemovedFeedback from "figma:asset/7235f98944aa9efc68796aee3f4ed01c409cbea7.png";
@@ -27,6 +35,8 @@ import Panel881668 from "./Panel-88-1668";
 import LayerPanel from "./LayerPanel-97-10893";
 import OcclusalgramScaleImage from "../components/OcclusalgramScaleImage";
 import PrepQcScaleImage from "../components/PrepQcScaleImage";
+import LayoutSwitcher from "../components/LayoutSwitcher";
+import CombinedReviewMarginPanel from "../components/CombinedReviewMarginPanel";
 
 function Component3DModelMary({ activeButtons }: { activeButtons: Set<number> }) {
   // When both monochrome (0) and feedback (1) buttons are active, show grayscale with blue markers
@@ -73,6 +83,47 @@ function Component3DModelMary({ activeButtons }: { activeButtons: Set<number> })
 }
 
 function Component3DModelView({ activeButtons }: { activeButtons: Set<number> }) {
+  // When Margin Line button (3) is active, show margin line specific view
+  if (activeButtons.has(3)) {
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          left: '50%',
+          top: 'calc(50% + 9.4%)', // slightly lower than default
+          transform: 'translate(-50%, -50%)',
+          width: '1200px', // smaller so it doesn't cover the whole screen
+          height: '1600px',
+          zIndex: 10,
+          pointerEvents: 'none', // allow clicking through to UI controls
+        }}
+        data-name="Margin Line Container"
+      >
+        <div
+          style={{
+            position: 'absolute',
+            inset: '4%', // a little more padding
+          }}
+          data-name="Margin Line Inner"
+        >
+          <img
+            alt="Dental arch - Margin line view"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              objectPosition: '50% 50%',
+              pointerEvents: 'none',
+            }}
+            src={imgMarginLineView}
+          />
+        </div>
+      </div>
+    );
+  }
+
   // When both Occulsgram (2) and Monochrome (0) buttons are active, show monochrome heatmap
   if (activeButtons.has(0) && activeButtons.has(2)) {
     return (
@@ -2481,7 +2532,8 @@ export default function ScreenTemplate({
   viewActiveButtons: externalViewActiveButtons,
   onPageChange: externalOnPageChange,
   onButtonClick: externalOnButtonClick,
-  onViewButtonClick: externalOnViewButtonClick
+  onViewButtonClick: externalOnViewButtonClick,
+  combinedPanelMode = false
 }: {
   initialPage?: string;
   microAnimations?: boolean;
@@ -2493,6 +2545,7 @@ export default function ScreenTemplate({
   onPageChange?: (page: string) => void;
   onButtonClick?: (index: number) => void;
   onViewButtonClick?: (index: number) => void;
+  combinedPanelMode?: boolean;
 } = {}) {
   // Use external state if provided, otherwise use local state (for backward compatibility)
   const [localCurrentPage, setLocalCurrentPage] = useState<string>(initialPage);
@@ -2578,13 +2631,6 @@ export default function ScreenTemplate({
           </div>
         </div>
       )}
-      {/* Original separate panels - Review Tool on right, Margin Line on bottom-left */}
-      {currentPage === 'view' && viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-        <div className="absolute left-[14px] bottom-[14px]">
-          {viewActiveButtons.has(3) && <Panel />}
-          {viewActiveButtons.has(5) && <Panel881668 />}
-        </div>
-      )}
       <HeaderTopBarITero currentPage={currentPage} onPageChange={handlePageChange} onBackToHome={onBackToHome} />
 
       {currentPage === 'scan' && layout === 'vertical' && (
@@ -2663,16 +2709,24 @@ export default function ScreenTemplate({
               <div className="absolute right-[17px] top-[93px] w-[195px]">
                 <ViewToolbar activeButtons={viewActiveButtons} onButtonClick={handleViewButtonClick} microAnimations={microAnimations} />
               </div>
-              {viewActiveButtons.has(1) && (
-                <div className="absolute right-[228px] top-[93px] w-[432px] h-[846px]">
-                  <CameraNiri />
+              {viewActiveButtons.has(1) && viewActiveButtons.has(3) && combinedPanelMode ? (
+                <div className="absolute right-[228px] top-[93px]">
+                  <CombinedReviewMarginPanel />
                 </div>
-              )}
-              {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-                <div className="absolute bottom-[14px] left-[14px]">
-                  {viewActiveButtons.has(3) && <Panel />}
-                  {viewActiveButtons.has(5) && <Panel881668 />}
-                </div>
+              ) : (
+                <>
+                  {viewActiveButtons.has(1) && (
+                    <div className="absolute right-[228px] top-[93px] w-[432px] h-[846px]">
+                      <CameraNiri />
+                    </div>
+                  )}
+                  {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+                    <div className="absolute bottom-[14px] left-[14px]">
+                      {viewActiveButtons.has(3) && <Panel />}
+                      {viewActiveButtons.has(5) && <Panel881668 />}
+                    </div>
+                  )}
+                </>
               )}
               {!viewActiveButtons.has(1) && viewActiveButtons.has(3) && (
                 <div className="absolute right-[228px] top-[93px]">
@@ -2700,16 +2754,24 @@ export default function ScreenTemplate({
               <div className="absolute right-[17px] top-[93px] w-[76px]">
                 <ViewToolbar activeButtons={viewActiveButtons} onButtonClick={handleViewButtonClick} microAnimations={microAnimations} />
               </div>
-              {viewActiveButtons.has(1) && (
-                <div className="absolute right-[106px] top-[93px] w-[432px] h-[846px]">
-                  <CameraNiri />
+              {viewActiveButtons.has(1) && viewActiveButtons.has(3) && combinedPanelMode ? (
+                <div className="absolute right-[106px] top-[93px]">
+                  <CombinedReviewMarginPanel />
                 </div>
-              )}
-              {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-                <div className="absolute bottom-[14px] left-[14px]">
-                  {viewActiveButtons.has(3) && <Panel />}
-                  {viewActiveButtons.has(5) && <Panel881668 />}
-                </div>
+              ) : (
+                <>
+                  {viewActiveButtons.has(1) && (
+                    <div className="absolute right-[106px] top-[93px] w-[432px] h-[846px]">
+                      <CameraNiri />
+                    </div>
+                  )}
+                  {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+                    <div className="absolute bottom-[14px] left-[14px]">
+                      {viewActiveButtons.has(3) && <Panel />}
+                      {viewActiveButtons.has(5) && <Panel881668 />}
+                    </div>
+                  )}
+                </>
               )}
               {!viewActiveButtons.has(1) && viewActiveButtons.has(3) && (
                 <div className="absolute right-[106px] top-[93px]">
@@ -2747,16 +2809,24 @@ export default function ScreenTemplate({
               microAnimations={microAnimations} 
             />
           </div>
-          {viewActiveButtons.has(1) && (
-            <div className="absolute top-[93px] right-[17px] w-[432px] h-[846px]">
-              <CameraNiri />
+          {viewActiveButtons.has(1) && viewActiveButtons.has(3) && combinedPanelMode ? (
+            <div className="absolute top-[93px] right-[17px]">
+              <CombinedReviewMarginPanel />
             </div>
-          )}
-          {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-            <div className="absolute bottom-[14px] left-[14px]">
-              {viewActiveButtons.has(3) && <Panel />}
-              {viewActiveButtons.has(5) && <Panel881668 />}
-            </div>
+          ) : (
+            <>
+              {viewActiveButtons.has(1) && (
+                <div className="absolute top-[93px] right-[17px] w-[432px] h-[846px]">
+                  <CameraNiri />
+                </div>
+              )}
+              {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+                <div className="absolute bottom-[14px] left-[14px]">
+                  {viewActiveButtons.has(3) && <Panel />}
+                  {viewActiveButtons.has(5) && <Panel881668 />}
+                </div>
+              )}
+            </>
           )}
           {!viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
             <div className="absolute top-[93px] right-[17px]">
@@ -2793,16 +2863,24 @@ export default function ScreenTemplate({
           <div className="absolute right-[17px] top-[93px]">
             <HorizontalTopToolbarView activeButtons={viewActiveButtons} onButtonClick={handleViewButtonClick} microAnimations={microAnimations} />
           </div>
-          {viewActiveButtons.has(1) && (
-            <div className="absolute top-[185px] right-[17px] w-[432px] h-[846px]">
-              <CameraNiri />
+          {viewActiveButtons.has(1) && viewActiveButtons.has(3) && combinedPanelMode ? (
+            <div className="absolute top-[185px] right-[17px]">
+              <CombinedReviewMarginPanel />
             </div>
-          )}
-          {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-            <div className="absolute bottom-[14px] left-[14px]">
-              {viewActiveButtons.has(3) && <Panel />}
-              {viewActiveButtons.has(5) && <Panel881668 />}
-            </div>
+          ) : (
+            <>
+              {viewActiveButtons.has(1) && (
+                <div className="absolute top-[185px] right-[17px] w-[432px] h-[846px]">
+                  <CameraNiri />
+                </div>
+              )}
+              {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+                <div className="absolute bottom-[14px] left-[14px]">
+                  {viewActiveButtons.has(3) && <Panel />}
+                  {viewActiveButtons.has(5) && <Panel881668 />}
+                </div>
+              )}
+            </>
           )}
           {!viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
             <div className="absolute top-[185px] right-[17px]">
@@ -2831,16 +2909,24 @@ export default function ScreenTemplate({
               microAnimations={microAnimations} 
             />
           </div>
-          {viewActiveButtons.has(1) && (
-            <div className="absolute top-[93px] right-[17px] w-[432px] h-[846px]">
-              <CameraNiri />
+          {viewActiveButtons.has(1) && viewActiveButtons.has(3) && combinedPanelMode ? (
+            <div className="absolute top-[93px] right-[17px]">
+              <CombinedReviewMarginPanel />
             </div>
-          )}
-          {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
-            <div className="absolute bottom-[14px] left-[14px]">
-              {viewActiveButtons.has(3) && <Panel />}
-              {viewActiveButtons.has(5) && <Panel881668 />}
-            </div>
+          ) : (
+            <>
+              {viewActiveButtons.has(1) && (
+                <div className="absolute top-[93px] right-[17px] w-[432px] h-[846px]">
+                  <CameraNiri />
+                </div>
+              )}
+              {viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
+                <div className="absolute bottom-[14px] left-[14px]">
+                  {viewActiveButtons.has(3) && <Panel />}
+                  {viewActiveButtons.has(5) && <Panel881668 />}
+                </div>
+              )}
+            </>
           )}
           {!viewActiveButtons.has(1) && (viewActiveButtons.has(3) || viewActiveButtons.has(5)) && (
             <div className="absolute top-[93px] right-[17px]">
@@ -2874,34 +2960,16 @@ export default function ScreenTemplate({
       
       {(onBackToHome || onNavigateToLayout) && (
         <div className="absolute top-[14px] left-[17px] z-50">
-          <div className="relative overflow-hidden">
-            <select
-              onChange={(e) => {
-                const value = e.target.value as 'home' | 'vertical' | 'horizontal-top' | 'horizontal-bottom';
-                if (value === 'home' && onBackToHome) {
-                  onBackToHome();
-                } else if (onNavigateToLayout) {
-                  onNavigateToLayout(value);
-                }
-              }}
-              value={layout === 'vertical' ? 'vertical' : layout === 'horizontal-top' ? 'horizontal-top' : 'horizontal-bottom'}
-              className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-[#f3f3f5] transition-colors shadow-md border border-gray-200 cursor-pointer min-w-[200px] pr-10 outline-none w-full"
-              style={{
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                MozAppearance: 'none',
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 0.75rem center',
-                backgroundSize: '1.25em 1.25em'
-              }}
-            >
-              <option value="home">Back to Home</option>
-              <option value="vertical">Vertical Layout</option>
-              <option value="horizontal-top">Horizontal Top Layout</option>
-              <option value="horizontal-bottom">Horizontal Bottom Layout</option>
-            </select>
-          </div>
+          <LayoutSwitcher
+            currentLayout={
+              layout === 'vertical' ? 'vertical' 
+              : layout === 'horizontal-top' ? 'horizontal-top' 
+              : layout === 'horizontal-bottom' ? 'horizontal-bottom'
+              : 'horizontal-bottom' // fallback for 'horizontal'
+            }
+            onNavigateToLayout={onNavigateToLayout || (() => {})}
+            onBackToHome={onBackToHome}
+          />
         </div>
       )}
     </div>
