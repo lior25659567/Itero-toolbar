@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import svgPaths from "./svg-vyw91xr0mn";
-// Organized button images (using figma:asset for reliability)
-import imgDentalArchColor from "figma:asset/a1dfc57a055d32f098369f51df6fd0791a341b87.png";
-import imgDentalArchGrayscale from "figma:asset/d986e19df0e9c14222abc9c62ff49e0276238d2a.png";
-import imgDentalArchColorFeedback from "figma:asset/7235f98944aa9efc68796aee3f4ed01c409cbea7.png";
-import imgDentalArchGrayscaleFeedback from "figma:asset/d8e804204d336774af7dc7e2a6b5aeb59aa2b508.png";
-import imgMarginLineView from "../assets/button-images/margin-line/dental-arch-margin-view.png";
-
-// Legacy imports (for backwards compatibility)
 import imgScreenshot20240318At1457BackgroundRemoved from "figma:asset/a1dfc57a055d32f098369f51df6fd0791a341b87.png";
 import imgScreenshot20240318At1457BackgroundRemovedGrayscale from "figma:asset/d986e19df0e9c14222abc9c62ff49e0276238d2a.png";
 import imgScreenshot20240318At1457BackgroundRemovedFeedback from "figma:asset/7235f98944aa9efc68796aee3f4ed01c409cbea7.png";
@@ -83,47 +75,6 @@ function Component3DModelMary({ activeButtons }: { activeButtons: Set<number> })
 }
 
 function Component3DModelView({ activeButtons }: { activeButtons: Set<number> }) {
-  // When Margin Line button (3) is active, show margin line specific view
-  if (activeButtons.has(3)) {
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          left: '50%',
-          top: 'calc(50% + 9.4%)', // slightly lower than default
-          transform: 'translate(-50%, -50%)',
-          width: '1200px', // smaller so it doesn't cover the whole screen
-          height: '1600px',
-          zIndex: 10,
-          pointerEvents: 'none', // allow clicking through to UI controls
-        }}
-        data-name="Margin Line Container"
-      >
-        <div
-          style={{
-            position: 'absolute',
-            inset: '4%', // a little more padding
-          }}
-          data-name="Margin Line Inner"
-        >
-          <img
-            alt="Dental arch - Margin line view"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              objectPosition: '50% 50%',
-              pointerEvents: 'none',
-            }}
-            src={imgMarginLineView}
-          />
-        </div>
-      </div>
-    );
-  }
-
   // When both Occulsgram (2) and Monochrome (0) buttons are active, show monochrome heatmap
   if (activeButtons.has(0) && activeButtons.has(2)) {
     return (
